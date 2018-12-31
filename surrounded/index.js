@@ -1,11 +1,17 @@
 // ==UserScript==
-// @name         Surrounded
-// @namespace    cpriest
-// @version      0.1
-// @description  Surrounds selected text on web pages with pairs of characters when typed, keeps selection unchanged.
-// @author       Clint Priest
-// @include     *
-// @grant        none
+// @name		Surrounded
+// @namespace	cpriest
+// @version		0.2
+// @description	Surrounds selected text on web pages with pairs of characters when typed, keeps selection unchanged.
+// @author		Clint Priest
+// @homepage	https://github.com/cpriest/userscripts/tree/master/surrounded
+// @match		http*://
+// @grant		none
+// @license		MIT
+// @compatible 	firefox
+// @compatible 	chrome
+// @compatible 	opera
+// @compatible 	safari
 // ==/UserScript==
 
 (function() {
@@ -15,7 +21,7 @@
 		  ALT   = 2,
 		  SHIFT = 4;
 
-	const ActiveKeys = [`'`, `"`, '{', '}', '[', ']', '`', '*', '_', '<', '>', ];
+	const ActiveKeys = [`'`, `"`, '{', '}', '[', ']', '`', '*', '_', '<', '>',];
 
 	/**
 	 * Returns true if we work with the passed in elem
@@ -48,10 +54,10 @@
 	function Surround(elem, key) {
 		let { selectionStart, selectionEnd, selectionDirection } = elem;
 
-		let leftKey = key + '',
-			rightKey = key + '',
-			leftValue = elem.value.substring(0, elem.selectionStart),
-			value = elem.value.substring(elem.selectionStart, elem.selectionEnd),
+		let leftKey    = key + '',
+			rightKey   = key + '',
+			leftValue  = elem.value.substring(0, elem.selectionStart),
+			value      = elem.value.substring(elem.selectionStart, elem.selectionEnd),
 			rightValue = elem.value.substring(elem.selectionEnd);
 
 		switch(leftKey) {
@@ -59,30 +65,30 @@
 				rightKey = '}';
 				break;
 			case '}':
-				rightKey = '{';
+				rightKey            = '{';
 				[leftKey, rightKey] = [rightKey, leftKey];
 				break;
 			case '[':
 				rightKey = ']';
 				break;
 			case ']':
-				rightKey = '[';
-				[leftKey,rightKey] = [rightKey, leftKey];
+				rightKey            = '[';
+				[leftKey, rightKey] = [rightKey, leftKey];
 				break;
 			case '<':
 				rightKey = '>';
 				break;
 			case '>':
-				rightKey = '<';
+				rightKey            = '<';
 				[leftKey, rightKey] = [rightKey, leftKey];
 				break;
 		}
 
 		// Remove Mode
 		if(leftValue.substr(-1) === leftKey && rightValue.substr(0, 1) === rightKey) {
-			leftValue = leftValue.substr(0, leftValue.length-1);
+			leftValue  = leftValue.substr(0, leftValue.length - 1);
 			rightValue = rightValue.substr(1);
-			leftKey = rightKey = '';
+			leftKey    = rightKey = '';
 			selectionStart--;
 			selectionEnd--;
 		} else {
@@ -91,9 +97,9 @@
 			selectionEnd++;
 		}
 
-		elem.value = `${leftValue}${leftKey}${value}${rightKey}${rightValue}`;
+		elem.value          = `${leftValue}${leftKey}${value}${rightKey}${rightValue}`;
 		elem.selectionStart = selectionStart;
-		elem.selectionEnd = selectionEnd;
+		elem.selectionEnd   = selectionEnd;
 	}
 
 	window.document.addEventListener('keydown',
