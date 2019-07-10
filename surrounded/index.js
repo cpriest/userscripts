@@ -1,17 +1,18 @@
 // ==UserScript==
 // @name		Surrounded
 // @namespace	cpriest
-// @version		0.2
+// @version		0.3
 // @description	Surrounds selected text on web pages with pairs of characters when typed, keeps selection unchanged.
 // @author		Clint Priest
 // @homepage	https://github.com/cpriest/userscripts/tree/master/surrounded
-// @match		http*://
+// @include		*
 // @grant		none
 // @license		MIT
 // @compatible 	firefox
 // @compatible 	chrome
 // @compatible 	opera
 // @compatible 	safari
+// @todo			Make it work with code editors (CodeMirror, ace)
 // ==/UserScript==
 
 (function() {
@@ -21,7 +22,7 @@
 		  ALT   = 2,
 		  SHIFT = 4;
 
-	const ActiveKeys = [`'`, `"`, '{', '}', '[', ']', '`', '*', '_', '<', '>',];
+	const ActiveKeys = [`'`, `"`, '(', ')', '{', '}', '[', ']', '`', '*', '_', '<', '>',];
 
 	/**
 	 * Returns true if we work with the passed in elem
@@ -66,6 +67,13 @@
 				break;
 			case '}':
 				rightKey            = '{';
+				[leftKey, rightKey] = [rightKey, leftKey];
+				break;
+			case '(':
+				rightKey = ')';
+				break;
+			case ')':
+				rightKey            = '(';
 				[leftKey, rightKey] = [rightKey, leftKey];
 				break;
 			case '[':
