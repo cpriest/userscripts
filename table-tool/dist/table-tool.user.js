@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         table-tool
 // @namespace    cmp.tt
-// @version      0.1.0
+// @version      0.1.2
 // @description  Provides useful tools for TABLE elements
 // @author       Clint Priest
 // @match        *://*/*
 // @grant        none
 // @source       
 // @license      MIT
-// @homepage     https://github.com/cpriest/userscripts/table-tool/
+// @homepage     https://github.com/cpriest/userscripts/tree/master/table-tool/
 // @updateURL    https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js
 // @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js,https://unpkg.com/mathjs/dist/math.min.js,https://unpkg.com/sprintf-js/dist/sprintf.min.js
 // ==/UserScript==
@@ -203,7 +203,7 @@ class TheOneRing {
 
 	TOR = new TheOneRing();
 
-	cl('54fd71cc37280a616c5135a1277c0f35 *./dist/table-tool.user.js');
+	cl('098654db4aabcc94ed9808a7f490d50b *./dist/table-tool.user.js');
 })();
 
 // CSS injection

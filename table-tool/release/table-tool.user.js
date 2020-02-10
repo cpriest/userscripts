@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         table-tool
 // @namespace    cmp.tt
-// @version      0.1.1
+// @version      0.1.2
 // @description  Provides useful tools for TABLE elements
 // @author       Clint Priest
 // @match        *://*/*
 // @grant        none
 // @source
 // @license      MIT
-// @homepage     https://github.com/resgen/table-tool
+// @homepage     https://github.com/cpriest/userscripts/tree/master/table-tool
 // @updateURL    https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js
 // @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
 // @require		 https://unpkg.com/mathjs/dist/math.min.js
@@ -201,7 +201,7 @@ class TheOneRing {
 
 	TOR = new TheOneRing();
 
-	cl('__THE_HASH__');
+
 })();
 
 (function(){

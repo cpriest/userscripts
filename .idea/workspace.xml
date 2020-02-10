@@ -12,6 +12,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ab8546cb-b283-44f7-ab99-6cdb0197f019" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/build.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" afterDir="false" />
     </list>
@@ -63,7 +65,17 @@
       <recent name="C:\code\node\table-tool\src\class1" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.build-bugfix">
+    <configuration name="build-bugfix" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/table-tool/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build-bugfix" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="build-minor" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/table-tool/package.json" />
       <command value="run" />
@@ -76,6 +88,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.build-bugfix" />
         <item itemvalue="npm.build-minor" />
       </list>
     </recent_temporary>
@@ -114,7 +127,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Release of v0.1 of table-tool" />
-    <option name="LAST_COMMIT_MESSAGE" value="Release of v0.1 of table-tool" />
+    <MESSAGE value="Manual bugfix to v0.1.1 due to userscript-builder bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="Manual bugfix to v0.1.1 due to userscript-builder bug." />
   </component>
   <component name="WindowStateProjectService">
     <state x="872" y="330" key="#Plugins" timestamp="1581351437670">
@@ -146,22 +160,22 @@
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="659" y="301" key="FileChooserDialogImpl/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581351226383" />
-    <state width="2210" height="350" key="GridCell.Tab.0.bottom" timestamp="1581355053249">
+    <state width="2195" height="350" key="GridCell.Tab.0.bottom" timestamp="1581360011048">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2210" height="350" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355053249" />
-    <state width="2210" height="350" key="GridCell.Tab.0.center" timestamp="1581355053249">
+    <state width="2195" height="350" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581360011048" />
+    <state width="2195" height="350" key="GridCell.Tab.0.center" timestamp="1581360011048">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2210" height="350" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355053249" />
-    <state width="2210" height="350" key="GridCell.Tab.0.left" timestamp="1581355053249">
+    <state width="2195" height="350" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581360011048" />
+    <state width="2195" height="350" key="GridCell.Tab.0.left" timestamp="1581360011048">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2210" height="350" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355053249" />
-    <state width="2210" height="350" key="GridCell.Tab.0.right" timestamp="1581355053249">
+    <state width="2195" height="350" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581360011048" />
+    <state width="2195" height="350" key="GridCell.Tab.0.right" timestamp="1581360011048">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2210" height="350" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355053249" />
+    <state width="2195" height="350" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581360011048" />
     <state x="720" y="330" key="IDE.errors.dialog" timestamp="1581355187171">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
@@ -172,10 +186,10 @@
     </state>
     <state x="163" y="0" width="1609" height="1019" key="SettingsEditor/0.0.1920.1019@0.0.1920.1019" timestamp="1581188162758" />
     <state x="380" y="205" key="SettingsEditor/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355381027" />
-    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581355825857">
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581356249814">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state x="872" y="422" key="Vcs.Push.Dialog.v2/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355825857" />
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581356249814" />
     <state x="953" y="478" key="cloudConfig.PluginsDialog" timestamp="1581345573350">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
@@ -198,10 +212,10 @@
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="936" y="325" key="run.anything.popup/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581352052264" />
-    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup" timestamp="1581351790163">
+    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup" timestamp="1581359921894">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="623" y="219" width="672" height="678" key="search.everywhere.popup/0.0.1920.1019@0.0.1920.1019" timestamp="1581277077215" />
-    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581351790163" />
+    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581359921894" />
   </component>
 </project>

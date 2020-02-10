@@ -1,6 +1,6 @@
 {
   "name": "table-tool",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Provides useful tools for TABLE elements",
   "main": "index.js",
   "dependencies": {
@@ -29,7 +29,7 @@
     "meta": {
       "name": "table-tool",
       "namespace": "cmp.tt",
-      "homepage": "https://github.com/cpriest/userscripts/table-tool/",
+      "homepage": "https://github.com/cpriest/userscripts/tree/master/table-tool/",
       "match": "*://*/*",
       "grant": "none",
       "updateURL": "https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js",
