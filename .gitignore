@@ -61,3 +61,5 @@ typings/
 .next
 
 .history
+node_modules
+*.bak

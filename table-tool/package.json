@@ -1,0 +1,43 @@
+{
+  "name": "table-tool",
+  "version": "0.1.0",
+  "description": "Provides useful tools for TABLE elements",
+  "main": "index.js",
+  "dependencies": {
+    "hotkeys-js": "^3.7.3",
+    "mathjs": "^6.6.0",
+    "sprintf-js": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/mathjs": "^6.0.4",
+    "userscript-builder": "^0.1.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "build.sh dev",
+    "build-bugfix": "build.sh bugfix",
+    "build-minor": "build.sh minor",
+    "build-major": "build.sh major"
+  },
+  "author": "Clint Priest",
+  "license": "MIT",
+  "userscript": {
+    "entry": "./src/index.js",
+    "dev": "./dist",
+    "release": "./release",
+    "fileName": "table-tool",
+    "meta": {
+      "name": "table-tool",
+      "namespace": "cmp.tt",
+      "homepage": "https://github.com/cpriest/userscripts/table-tool/",
+      "match": "*://*/*",
+      "grant": "none",
+      "updateURL": "https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js",
+      "require": [
+        "https://unpkg.com/hotkeys-js/dist/hotkeys.min.js",
+        "https://unpkg.com/mathjs/dist/math.min.js",
+        "https://unpkg.com/sprintf-js/dist/sprintf.min.js"
+      ]
+    }
+  }
+}

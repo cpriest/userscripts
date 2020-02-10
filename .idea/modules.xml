@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/userscripts.iml" filepath="$PROJECT_DIR$/.idea/userscripts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/table-tool.iml" filepath="$PROJECT_DIR$/.idea/table-tool.iml" />
     </modules>
   </component>
 </project>

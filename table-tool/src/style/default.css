@@ -1,0 +1,30 @@
+DIV#TableTools {
+  position: absolute;
+}
+DIV#TableTools > DIV.State {
+  position: absolute;
+  text-align: right;
+}
+
+TABLE[jsclass=CrossTable] TR.ttHighlight :nth-child(-n+3) {
+  background-color: #e0ffff;
+}
+TABLE[jsclass=CrossTable] TR.ttHighlight > .zBandNeg2 {
+  background-color: #FF0000;
+  font-weight: bold;
+}
+TABLE[jsclass=CrossTable] TR.ttHighlight > .zBandNeg1 {
+  background-color: #FFc0c0;
+}
+TABLE[jsclass=CrossTable] TR.ttHighlight > .zBand0 {
+  background-color: #fefefe;
+}
+TABLE[jsclass=CrossTable] TR.ttHighlight > .zBandPos1 {
+  background-color: #c0FFc0;
+}
+TABLE[jsclass=CrossTable] TR.ttHighlight > .zBandPos2 {
+  font-weight: bold;
+  background-color: #00FF00;
+}
+
+/*# sourceMappingURL=default.css.map */

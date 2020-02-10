@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" promptOnRemoteOverwrite="CHECK_TIMESTAMP" exclude=".cvs;.DS_Store" autoUploadExternalChanges="true" notifyRemoteChanges="true">
+  <component name="PublishConfigData">
     <serverData>
-      <paths name="(ssh commands) deploy">
+      <paths name="(ssh commands) deploy-rs">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -30,13 +30,6 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="dep-chi/ijapi">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
       <paths name="deploy-chi/esp">
         <serverdata>
           <mappings>
@@ -58,6 +51,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="deploy-rs/ijapi-release">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="ijapi@local-vm[ijapi]">
         <serverdata>
           <mappings>
@@ -65,7 +65,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="push01/esp">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="rddb:play/graphdb-neo4j">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
-    <option name="myAutoUpload" value="ON_EXPLICIT_SAVE" />
   </component>
 </project>
