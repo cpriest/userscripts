@@ -1,6 +1,6 @@
 {
   "name": "table-tool",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides useful tools for TABLE elements",
   "main": "index.js",
   "dependencies": {

@@ -11,36 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab8546cb-b283-44f7-ab99-6cdb0197f019" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator-enh.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/table-tool.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/TamperMonkeyStub-dev.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/build.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/Header.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/Prefs.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/TheRing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/assets/UI.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/style/default.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/style/default.css.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/style/default.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Clint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Clint.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +30,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+    <option name="WARN_ABOUT_CRLF" value="false" />
   </component>
   <component name="ProjectId" id="1XDYGGEbogFdq1UuHLBQuQbIYyZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -137,6 +113,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Release of v0.1 of table-tool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Release of v0.1 of table-tool" />
   </component>
   <component name="WindowStateProjectService">
     <state x="872" y="330" key="#Plugins" timestamp="1581351437670">
@@ -194,6 +172,10 @@
     </state>
     <state x="163" y="0" width="1609" height="1019" key="SettingsEditor/0.0.1920.1019@0.0.1920.1019" timestamp="1581188162758" />
     <state x="380" y="205" key="SettingsEditor/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355381027" />
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581355825857">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355825857" />
     <state x="953" y="478" key="cloudConfig.PluginsDialog" timestamp="1581345573350">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
@@ -204,6 +186,10 @@
     </state>
     <state x="715" y="353" key="cloudConfig.SelfSettingsDialog/0.0.1920.1019@0.0.1920.1019" timestamp="1581188177676" />
     <state x="953" y="478" key="cloudConfig.SelfSettingsDialog/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581345558215" />
+    <state x="1087" y="599" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581355814216">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
+    <state x="1087" y="599" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355814216" />
     <state x="0" y="0" width="2560" height="1379" key="find.popup" timestamp="1581351951589">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>

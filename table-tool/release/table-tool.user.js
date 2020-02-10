@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name         table-tool
 // @namespace    cmp.tt
-// @version      0.1.0
+// @version      0.1.1
 // @description  Provides useful tools for TABLE elements
 // @author       Clint Priest
 // @match        *://*/*
 // @grant        none
-// @source       
+// @source
 // @license      MIT
 // @homepage     https://github.com/resgen/table-tool
 // @updateURL    https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js
-// @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js,https://unpkg.com/mathjs/dist/math.min.js,https://unpkg.com/sprintf-js/dist/sprintf.min.js
+// @require      https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
+// @require		 https://unpkg.com/mathjs/dist/math.min.js
+// @require		 https://unpkg.com/sprintf-js/dist/sprintf.min.js
 // ==/UserScript==
 
 let cl = console.log.bind(console);
