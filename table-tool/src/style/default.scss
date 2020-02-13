@@ -6,10 +6,14 @@ DIV#TableTools {
 	}
 }
 
-TABLE[jsclass="CrossTable"] {
+TABLE.ttActive[jsclass="CrossTable"] {
 	TR.ttHighlight {
-		:nth-child(-n+3) {
+		:nth-child(1) {
 			background-color: #e0ffff;
+		}
+
+		> .zSkip {
+			color: #808080;
 		}
 
 		> .zBandNeg2 {
@@ -22,7 +26,6 @@ TABLE[jsclass="CrossTable"] {
 		}
 
 		> .zBand0 {
-			background-color: #fefefe;
 		}
 
 		> .zBandPos1 {

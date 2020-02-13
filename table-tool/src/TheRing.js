@@ -1,3 +1,5 @@
+import { TableConfig } from 'TableConfig.js';
+
 export function zscore(n, mean, stddev) {
 	return (n - mean) / stddev;
 }
@@ -56,16 +58,60 @@ export function snap(n, bands) {
 	});
 }
 
+let staticConfig = {
+	Selector:      'TABLE[jsclass=CrossTable]',	// CSS Selector to target which tables are targetable
+	DataSelector:  'TR.DataRow',					// CSS Selector to select which rows are data rows
+	HeaderColumns: 4,								// Column count which are not considered data
+	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],	// The zScore bounds to which zScores will be (fix)ed to
+
+	// Each column name is matched against all patterns, settings for row titles matching a pattern will be
+	// merged together with least to greatest priority, defaults should start at the first position
+	Columns: {
+		".+":                                              {				// Row Header Names this configuration applies to
+			SkipCells: 1,       // Number of data cells to skip for calculations
+			Inverted:  false,	// Invert the zBand scores (inverts colors)
+		},
+		"Disabled|(Unsubscribe|Complaint|Bounce|Block)s?": {
+			Inverted: true,
+		},
+		"RPC|CPM|.+Rate$":                                {
+			SkipCells: 0,
+		},
+	}
+};
+
+
 export class TheOneRing {
 
 	/**
 	 * @constructor
+	 * @param {TableConfig} tableConfig		The table configuration for TheOneRing
 	 */
-	constructor() {
+	constructor(tableConfig) {
+
+		this.tableConfig = new TableConfig(staticConfig);
+
+		this.zBandScale = 1.0;
+
 		hotkeys('Control+\'', (e, h) => {
 			this.toggleActive();
+			this.colorizeSelector(this.tableConfig.DataSelector);
 		});
-//		this.toggleActive();
+		hotkeys('h', 'active', (e, h) => {
+			this.colorizeSelector(this.tableConfig.DataSelector);
+			return false;
+		});
+		hotkeys('*', 'active', (e, h) => {
+			if((e.key != '+' && e.key != '-') || e.xshiftKey || e.altKey || e.ctrlKey)
+				return;
+
+			let adjust = .1 * (e.key == '+' || -1);
+
+			this.zBandScale = min(.1, this.zBandScale + adjust);
+			console.log('zScale Now %.1f', this.zBandScale);
+//			console.log(e.key, e.keyCode, e, h);
+			return false;
+		});
 	}
 
 	/**
@@ -75,20 +121,31 @@ export class TheOneRing {
 		if(this.active === undefined)
 			this.initialize();
 		this.active = !this.active;
-		cl('now %s', this.active ? 'active' : 'inactive');
-		for(let row of document.querySelectorAll('TR.DataRow'))
-			this.colorizeRow(row);
+
+		if(this.active) {
+			hotkeys.setScope('active');
+			for(let el of this.tables)
+				el.classList.add('ttActive');
+		} else {
+			hotkeys.setScope('all');
+			for(let el of this.tables)
+				el.classList.remove('ttActive');
+		}
 	}
 
 	initialize() {
 		this.active  = false;
 		this.onClick = this.onClick.bind(this);
-		for(let elem of document.querySelectorAll('TABLE[jsclass="CrossTable"]'))
+		this.tables = Array.from(document.querySelectorAll(this.tableConfig.Selector));
+		for(let elem of this.tables)
 			elem.addEventListener('click', this.onClick);
 	}
 
 	onClick(e) {
-		let row = e.target.closest('TR.DataRow');
+		if(!this.active)
+			return;
+
+		let row = e.target.closest(this.tableConfig.DataSelector);
 		if(!row)
 			return;
 
@@ -96,20 +153,52 @@ export class TheOneRing {
 	}
 
 	/**
+	 * Queries for the given elements using {selector} and colorizes the rows
+	 *
+	 * @param {string} selector
+	 */
+	colorizeSelector(selector) {
+		for(let row of document.querySelectorAll(selector))
+			this.colorizeRow(row);
+	}
+	/**
 	 * Colorizes the row according to analysis
 	 *
 	 * @param {Element} row	The row of data to highlight
+	 * @param {boolean} toggle Toggle the highlight or add
 	 */
-	colorizeRow(row) {
-		row.classList.toggle('ttHighlight');
-		if(!row.classList.contains('ttHighlight'))
-			return;
+	colorizeRow(row, toggle = true) {
+		if(toggle) {
+			row.classList.toggle('ttHighlight');
+			if(!row.classList.contains('ttHighlight'))
+				return;
+		} else {
+			row.classList.add('ttHighlight');
+		}
 
 		/** @type {Element[]} */
-		let dataElems = Array.from(row.children)
-			.slice(Prefs.SkipColumns);
+		let cells = Array.from(row.children);
 
-		const bands = [-2, -1.3, 0, 1.3, 2];
+		// Header is assumed to be first cell
+		let header = cells.shift();
+
+		// Drop off any remaining header cells
+		for(let j = 1; j < this.tableConfig.HeaderColumns; j++)
+			cells.shift();
+
+		// Remaining cells are data
+		/** @type {Element[]} */
+		let dataElems = cells;
+
+		let rowConfig = this.tableConfig.GetColumnConfig(header.textContent);
+//		console.log(header.textContent, rowConfig);
+
+		const bands = this.tableConfig.zScoreBands;
+
+		for(let j = 0; j < rowConfig.SkipCells; j++) {
+			let cell = dataElems.shift();
+			cell.classList.add('zSkip');
+		}
 
 		let data = dataElems.map((el) => this.toNumber(el.textContent));
 
@@ -117,7 +206,7 @@ export class TheOneRing {
 			stddev   = math.std(data),
 			variance = math.variance(data);
 
-		let zData    = data.map((n) => zscore(n, mean, stddev)),
+		let zData    = data.map((n) => zscore(n, mean, stddev) * (!rowConfig.Inverted || -1)),
 			zSnap    = zData.map((n) => snap(n, bands)),
 			zCssName = zSnap.map((n) => {
 				let idxOffset = bands.indexOf(n) - Math.floor(bands.length / 2);
