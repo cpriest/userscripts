@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         table-tool
 // @namespace    cmp.tt
-// @version      0.2.0
+// @version      0.2.1
 // @description  Provides useful tools for TABLE elements
 // @author       Clint Priest
 // @match        none
 // @grant        none
-// @source
+// @source       
 // @license      MIT
 // @homepage     https://github.com/cpriest/userscripts/tree/master/table-tool/
 // @updateURL    https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js
@@ -207,10 +207,10 @@ function snap(n, bands) {
 }
 
 let staticConfig = {
-	Selector:      'TABLE[jsclass=CrossTable]',	// CSS Selector to target which tables are targetable
+	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
 	DataSelector:  'TR.DataRow',					// CSS Selector to select which rows are data rows
 	HeaderColumns: 4,								// Column count which are not considered data
-	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],	// The zScore bounds to which zScores will be (fix)ed to
+	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],		// The zScore bounds to which zScores will be (fix)ed to
 
 	// Each column name is matched against all patterns, settings for row titles matching a pattern will be
 	// merged together with least to greatest priority, defaults should start at the first position
@@ -433,6 +433,9 @@ TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg2 {
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg1 {
   background-color: #FFc0c0;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBand0 {
+  background-color: white;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandPos1 {
   background-color: #c0FFc0;

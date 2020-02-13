@@ -19,6 +19,9 @@ TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg2 {
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg1 {
   background-color: #FFc0c0;
 }
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBand0 {
+  background-color: white;
+}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandPos1 {
   background-color: #c0FFc0;
 }

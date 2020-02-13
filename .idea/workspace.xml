@@ -11,9 +11,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab8546cb-b283-44f7-ab99-6cdb0197f019" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/table-tool/src/ColumnConfig.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/table-tool/src/TableConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Clint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Clint.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/package.json" afterDir="false" />
@@ -71,7 +68,7 @@
       <recent name="C:\code\node\table-tool\src\class1" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build-minor">
+  <component name="RunManager" selected="npm.build-bugfix">
     <configuration name="build-bugfix" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/table-tool/package.json" />
       <command value="run" />
@@ -94,8 +91,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build-minor" />
         <item itemvalue="npm.build-bugfix" />
+        <item itemvalue="npm.build-minor" />
       </list>
     </recent_temporary>
   </component>
@@ -136,9 +133,14 @@
     <MESSAGE value="Manual bugfix to v0.1.1 due to userscript-builder bug." />
     <MESSAGE value="Updated homepage url" />
     <MESSAGE value="Changed to matching no domains by default, updated README.md as such." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed to matching no domains by default, updated README.md as such." />
+    <MESSAGE value="Added Table/ColumnConfig classes, implemented them with a staticConfig for the moment.&#10;Added rudimentary start to vim mode states." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Table/ColumnConfig classes, implemented them with a staticConfig for the moment.&#10;Added rudimentary start to vim mode states." />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1017" y="425" key="#File_Watchers" timestamp="1581604637475">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
+    <state x="1017" y="425" key="#File_Watchers/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604637475" />
     <state x="872" y="330" key="#Plugins" timestamp="1581351437670">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
@@ -159,48 +161,51 @@
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="1027" y="438" key="#com.intellij.tools.ToolEditorDialog/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581347383358" />
-    <state x="803" y="394" width="790" height="674" key="EditFileWatcherDialog" timestamp="1581354999288">
+    <state x="803" y="394" width="790" height="674" key="EditFileWatcherDialog" timestamp="1581604694488">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
+    <state x="803" y="394" key="EditFileWatcherDialog/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604694488" />
     <state x="602" y="291" width="715" height="674" key="EditFileWatcherDialog/0.0.1920.1019@0.0.1920.1019" timestamp="1580616594132" />
     <state x="803" y="394" width="790" height="674" key="EditFileWatcherDialog/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581354999288" />
     <state x="659" y="301" key="FileChooserDialogImpl" timestamp="1581351226383">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="659" y="301" key="FileChooserDialogImpl/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581351226383" />
-    <state width="2195" height="350" key="GridCell.Tab.0.bottom" timestamp="1581603771071">
+    <state width="2195" height="350" key="GridCell.Tab.0.bottom" timestamp="1581604506425">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.bottom/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581603771071" />
+    <state width="2195" height="350" key="GridCell.Tab.0.bottom/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
     <state width="2195" height="350" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2195" height="350" key="GridCell.Tab.0.center" timestamp="1581603771070">
+    <state width="2195" height="350" key="GridCell.Tab.0.center" timestamp="1581604506425">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.center/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581603771070" />
+    <state width="2195" height="350" key="GridCell.Tab.0.center/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
     <state width="2195" height="350" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2195" height="350" key="GridCell.Tab.0.left" timestamp="1581603771069">
+    <state width="2195" height="350" key="GridCell.Tab.0.left" timestamp="1581604506425">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.left/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581603771069" />
+    <state width="2195" height="350" key="GridCell.Tab.0.left/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
     <state width="2195" height="350" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2195" height="350" key="GridCell.Tab.0.right" timestamp="1581603771071">
+    <state width="2195" height="350" key="GridCell.Tab.0.right" timestamp="1581604506425">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.right/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581603771071" />
+    <state width="2195" height="350" key="GridCell.Tab.0.right/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
     <state width="2195" height="350" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
     <state x="720" y="330" key="IDE.errors.dialog" timestamp="1581355187171">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="540" y="244" key="IDE.errors.dialog/0.0.1920.1019@0.0.1920.1019" timestamp="1580601390033" />
     <state x="720" y="330" key="IDE.errors.dialog/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355187171" />
-    <state x="163" y="0" width="1609" height="1019" key="SettingsEditor" timestamp="1581564168880">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state x="163" y="0" width="1609" height="1019" key="SettingsEditor/0.0.1920.1019@0.0.1920.1019" timestamp="1581564168880" />
-    <state x="380" y="205" key="SettingsEditor/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355381027" />
-    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581365785765">
+    <state x="217" y="0" width="1609" height="1019" key="SettingsEditor" timestamp="1581604697143">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
+    <state x="217" y="0" key="SettingsEditor/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604697143" />
+    <state x="163" y="0" width="1609" height="1019" key="SettingsEditor/0.0.1920.1019@0.0.1920.1019" timestamp="1581564168880" />
+    <state x="380" y="205" key="SettingsEditor/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355381027" />
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581604108636">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604108636" />
     <state x="872" y="422" key="Vcs.Push.Dialog.v2/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365785765" />
     <state x="953" y="478" key="cloudConfig.PluginsDialog" timestamp="1581345573350">
       <screen x="0" y="0" width="2560" height="1379" />

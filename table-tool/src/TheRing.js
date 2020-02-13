@@ -59,10 +59,10 @@ export function snap(n, bands) {
 }
 
 let staticConfig = {
-	Selector:      'TABLE[jsclass=CrossTable]',	// CSS Selector to target which tables are targetable
+	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
 	DataSelector:  'TR.DataRow',					// CSS Selector to select which rows are data rows
 	HeaderColumns: 4,								// Column count which are not considered data
-	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],	// The zScore bounds to which zScores will be (fix)ed to
+	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],		// The zScore bounds to which zScores will be (fix)ed to
 
 	// Each column name is matched against all patterns, settings for row titles matching a pattern will be
 	// merged together with least to greatest priority, defaults should start at the first position
