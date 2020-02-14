@@ -11,14 +11,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab8546cb-b283-44f7-ab99-6cdb0197f019" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/TamperMonkeyStub-dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/TamperMonkeyStub-dev.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/src/TheRing.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/TheRing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table-tool/src/style/default.css" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/style/default.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table-tool/src/style/default.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/style/default.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table-tool/src/style/default.scss" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/style/default.scss" afterDir="false" />
+    </list>
+    <list id="9d14b12c-f096-4f0f-b9d9-673eb912f02b" name="Non-Commit" comment="">
+      <change beforePath="$PROJECT_DIR$/table-tool/src/TheRing.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/TheRing.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +40,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
     <option name="WARN_ABOUT_CRLF" value="false" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/table-tool/src/TheRing.js">
+      <ranges>
+        <range start1="107" end1="108" start2="107" end2="108" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="109" end1="110" start2="109" end2="110" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="112" end1="112" start2="112" end2="114" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="114" end1="114" start2="116" end2="127" changelist="9d14b12c-f096-4f0f-b9d9-673eb912f02b" />
+        <range start1="139" end1="141" start2="152" end2="154" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="150" end1="150" start2="163" end2="168" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="167" end1="168" start2="185" end2="185" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="169" end1="177" start2="186" end2="188" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="195" end1="196" start2="206" end2="209" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+        <range start1="202" end1="202" start2="215" end2="223" changelist="ab8546cb-b283-44f7-ab99-6cdb0197f019" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="1XDYGGEbogFdq1UuHLBQuQbIYyZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -68,7 +87,7 @@
       <recent name="C:\code\node\table-tool\src\class1" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.build-bugfix">
+  <component name="RunManager" selected="npm.build-minor">
     <configuration name="build-bugfix" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/table-tool/package.json" />
       <command value="run" />
@@ -89,24 +108,23 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/table-tool/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.build-bugfix" />
         <item itemvalue="npm.build-minor" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.build-bugfix" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
@@ -134,7 +152,8 @@
     <MESSAGE value="Updated homepage url" />
     <MESSAGE value="Changed to matching no domains by default, updated README.md as such." />
     <MESSAGE value="Added Table/ColumnConfig classes, implemented them with a staticConfig for the moment.&#10;Added rudimentary start to vim mode states." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Table/ColumnConfig classes, implemented them with a staticConfig for the moment.&#10;Added rudimentary start to vim mode states." />
+    <MESSAGE value="Fixed an issue with zBand0 not highlighting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed an issue with zBand0 not highlighting." />
   </component>
   <component name="WindowStateProjectService">
     <state x="1017" y="425" key="#File_Watchers" timestamp="1581604637475">
@@ -171,25 +190,29 @@
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="659" y="301" key="FileChooserDialogImpl/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581351226383" />
-    <state width="2195" height="350" key="GridCell.Tab.0.bottom" timestamp="1581604506425">
+    <state width="2190" height="350" key="GridCell.Tab.0.bottom" timestamp="1581693902248">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.bottom/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
+    <state width="2190" height="350" key="GridCell.Tab.0.bottom/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581693902248" />
+    <state width="1511" height="263" key="GridCell.Tab.0.bottom/0.0.1920.1019@0.0.1920.1019" timestamp="1581645244677" />
     <state width="2195" height="350" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2195" height="350" key="GridCell.Tab.0.center" timestamp="1581604506425">
+    <state width="2190" height="350" key="GridCell.Tab.0.center" timestamp="1581693902248">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.center/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
+    <state width="2190" height="350" key="GridCell.Tab.0.center/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581693902248" />
+    <state width="1511" height="263" key="GridCell.Tab.0.center/0.0.1920.1019@0.0.1920.1019" timestamp="1581645244676" />
     <state width="2195" height="350" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2195" height="350" key="GridCell.Tab.0.left" timestamp="1581604506425">
+    <state width="2190" height="350" key="GridCell.Tab.0.left" timestamp="1581693902247">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.left/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
+    <state width="2190" height="350" key="GridCell.Tab.0.left/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581693902247" />
+    <state width="1511" height="263" key="GridCell.Tab.0.left/0.0.1920.1019@0.0.1920.1019" timestamp="1581645244676" />
     <state width="2195" height="350" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2195" height="350" key="GridCell.Tab.0.right" timestamp="1581604506425">
+    <state width="2190" height="350" key="GridCell.Tab.0.right" timestamp="1581693902248">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state width="2195" height="350" key="GridCell.Tab.0.right/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604506425" />
+    <state width="2190" height="350" key="GridCell.Tab.0.right/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581693902248" />
+    <state width="1511" height="263" key="GridCell.Tab.0.right/0.0.1920.1019@0.0.1920.1019" timestamp="1581645244676" />
     <state width="2195" height="350" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
     <state x="720" y="330" key="IDE.errors.dialog" timestamp="1581355187171">
       <screen x="0" y="0" width="2560" height="1379" />
@@ -202,10 +225,18 @@
     <state x="217" y="0" key="SettingsEditor/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604697143" />
     <state x="163" y="0" width="1609" height="1019" key="SettingsEditor/0.0.1920.1019@0.0.1920.1019" timestamp="1581564168880" />
     <state x="380" y="205" key="SettingsEditor/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581355381027" />
-    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581604108636">
+    <state x="1127" y="605" key="VCS.ChangelistChooser" timestamp="1581693962662">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
-    <state x="872" y="422" key="Vcs.Push.Dialog.v2/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604108636" />
+    <state x="1127" y="605" key="VCS.ChangelistChooser/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581693962662" />
+    <state x="1110" y="558" key="VCS.EditChangelistDialog" timestamp="1581604760530">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
+    <state x="1110" y="558" key="VCS.EditChangelistDialog/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604760530" />
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2" timestamp="1581604963537">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
+    <state x="872" y="422" key="Vcs.Push.Dialog.v2/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581604963537" />
     <state x="872" y="422" key="Vcs.Push.Dialog.v2/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365785765" />
     <state x="953" y="478" key="cloudConfig.PluginsDialog" timestamp="1581345573350">
       <screen x="0" y="0" width="2560" height="1379" />

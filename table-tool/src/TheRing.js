@@ -105,11 +105,13 @@ export class TheOneRing {
 			if((e.key != '+' && e.key != '-') || e.xshiftKey || e.altKey || e.ctrlKey)
 				return;
 
-			let adjust = .1 * (e.key == '+' || -1);
+			let adjust = .05 * (e.key == '+' || -1);
 
-			this.zBandScale = min(.1, this.zBandScale + adjust);
+			this.zBandScale = Math.max(.1, this.zBandScale + adjust);
 			console.log('zScale Now %.1f', this.zBandScale);
 //			console.log(e.key, e.keyCode, e, h);
+
+			this.colorizeSelector(this.tableConfig.DataSelector);
 			return false;
 		});
 	}
@@ -137,8 +139,8 @@ export class TheOneRing {
 		this.active  = false;
 		this.onClick = this.onClick.bind(this);
 		this.tables = Array.from(document.querySelectorAll(this.tableConfig.Selector));
-		for(let elem of this.tables)
-			elem.addEventListener('click', this.onClick);
+//		for(let elem of this.tables)
+//			elem.addEventListener('click', this.onClick);
 	}
 
 	onClick(e) {
@@ -148,6 +150,11 @@ export class TheOneRing {
 		let row = e.target.closest(this.tableConfig.DataSelector);
 		if(!row)
 			return;
+
+		if(row.classList.contains('ttHighlight')) {
+			row.classList.remove('ttHighlight');
+			return;
+		}
 
 		this.colorizeRow(row);
 	}
@@ -165,16 +172,9 @@ export class TheOneRing {
 	 * Colorizes the row according to analysis
 	 *
 	 * @param {Element} row	The row of data to highlight
-	 * @param {boolean} toggle Toggle the highlight or add
 	 */
-	colorizeRow(row, toggle = true) {
-		if(toggle) {
-			row.classList.toggle('ttHighlight');
-			if(!row.classList.contains('ttHighlight'))
-				return;
-		} else {
-			row.classList.add('ttHighlight');
-		}
+	colorizeRow(row) {
+		row.classList.add('ttHighlight');
 
 		/** @type {Element[]} */
 		let cells = Array.from(row.children);
@@ -193,12 +193,22 @@ export class TheOneRing {
 		let rowConfig = this.tableConfig.GetColumnConfig(header.textContent);
 //		console.log(header.textContent, rowConfig);
 
-		const bands = this.tableConfig.zScoreBands;
+		const bands = this.tableConfig
+			.zScoreBands
+			.map((n) => n * this.zBandScale);
 
 		for(let j = 0; j < rowConfig.SkipCells; j++) {
 			let cell = dataElems.shift();
 			cell.classList.add('zSkip');
 		}
+
+		// Clear any previous scoring
+		dataElems.forEach((el) => {
+			for(let cl of el.classList) {
+				if(cl.match(/^zBand/))
+					el.classList.remove(cl);
+			}
+		});
 
 		let data = dataElems.map((el) => this.toNumber(el.textContent));
 

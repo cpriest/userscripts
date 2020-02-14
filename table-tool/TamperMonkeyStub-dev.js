@@ -8,6 +8,7 @@
 // @grant        none
 // @source
 // @license      MIT
+// @run-at       document-end
 // @homepage     https://github.com/resgen/table-tool
 // @require		 https://unpkg.com/hotkeys-js/dist/hotkeys.min.js
 // @require		 https://unpkg.com/sprintf-js/dist/sprintf.min.js

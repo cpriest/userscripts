@@ -1,6 +1,6 @@
 {
   "name": "table-tool",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Provides useful tools for TABLE elements",
   "main": "index.js",
   "dependencies": {
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/mathjs": "^6.0.4",
-    "userscript-builder": "^0.1.6"
+    "userscript-builder": "^0.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
