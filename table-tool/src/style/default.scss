@@ -1,3 +1,5 @@
+
+
 DIV#TableTools {
   	position: absolute;
 	> DIV.State {
@@ -8,34 +10,87 @@ DIV#TableTools {
 
 TABLE.ttActive[jsclass="CrossTable"] {
 	TR.ttHighlight {
-		:nth-child(1) {
-			background-color: #e0ffff;
+		$RowHoverColor: #FFEDDE;
+
+		@mixin zBand($name, $color, $color2) {
+			> .#{$name} {
+				@content;
+				background-color: $color;
+			}
+			&:hover > .#{$name} {
+				background-color: mix($color, $color2);
+			}
 		}
 
-		> .zSkip {
+		@include zBand(zSkip, white, $RowHoverColor) {
 			color: #808080;
- 		}
+		}
 
-		> .zBandNeg2 {
-			background-color: #FF0000;
+		@include zBand(zBandNeg2, #FF0000, $RowHoverColor) {
 			font-weight: bold;
 		}
 
-		> .zBandNeg1 {
-			background-color: #FFc0c0;
+		@include zBand(zBandNeg1, #FFc0c0, $RowHoverColor) {
+
 		}
 
-		> .zBand0 {
-			background-color: white;
+		@include zBand(zBand0, white, $RowHoverColor) {
+
 		}
 
-		> .zBandPos1 {
-			background-color: #c0FFc0;
+		@include zBand(zBandPos1, #c0FFc0FF, $RowHoverColor) {
+
 		}
 
-		> .zBandPos2 {
+		@include zBand(zBandPos2, #00FF00, $RowHoverColor) {
 			font-weight: bold;
-			background-color: #00FF00;
+		}
+
+		&.Tagged, > TD.Tagged {
+			outline: 2px solid deeppink !important;
+		}
+
+		&:hover {
+			background-color: $RowHoverColor;
+			//outline: 2px solid red !important;
+		}
+		//&:hover {
+		//	background-color: inherit;
+		//	outline: 2px solid red !important;
+		//
+		//	TH, TD {
+		//		//background-color: currentColor, #FF0000A0;
+		//		//border-top: 2px solid red !important;
+		//		//border-bottom: 2px solid red !important;
+		//	}
+		//}
+
+		&.RSD10 {
+			TH, TD {
+				border-bottom: 2px solid #0F0;
+				//border-bottom-color: #5f5;
+			}
+		}
+
+		&.RSD15 {
+			TH, TD {
+				border-bottom: 2px dashed #060;
+				//border-bottom-width: 2px;
+				//border-bottom-style: dashed;
+				//border-bottom-color: #090;
+				//border-bottom-color: #5f5;
+				//border-bottom-color: #0F0;
+			}
+		}
+
+		&.RSD20 {
+			TH, TD {
+				border-bottom:  2px  #060 dotted;
+				//border-bottom-width: 3px;
+				//border-bottom-style: wave;
+				//border-bottom-color: #050;
+				//border-bottom-color: #afa;
+			}
 		}
 	}
 }

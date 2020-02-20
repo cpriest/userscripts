@@ -2,9 +2,11 @@
   <dictionary name="Clint">
     <words>
       <w>elems</w>
+      <w>hotkeys</w>
       <w>jsclass</w>
       <w>stddev</w>
       <w>targetable</w>
+      <w>userscript</w>
       <w>zscore</w>
     </words>
   </dictionary>

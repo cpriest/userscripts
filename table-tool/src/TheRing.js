@@ -1,4 +1,17 @@
-import { TableConfig } from 'TableConfig.js';
+import {TableConfig} from './TableConfig';
+import {max, mean, min, std} from 'mathjs';
+import {stripIndent} from 'common-tags';
+import hotkeys from 'hotkeys-js';
+
+// Number Format ~ %.2f
+let nf = new Intl.NumberFormat('en-us', {
+	minimumFractionDigits: 0,
+	maximumFractionDigits: 2,
+});
+
+export function format(n) {
+	return nf.format(n);
+}
 
 export function zscore(n, mean, stddev) {
 	return (n - mean) / stddev;
@@ -58,38 +71,19 @@ export function snap(n, bands) {
 	});
 }
 
-let staticConfig = {
-	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
-	DataSelector:  'TR.DataRow',					// CSS Selector to select which rows are data rows
-	HeaderColumns: 4,								// Column count which are not considered data
-	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],		// The zScore bounds to which zScores will be (fix)ed to
-
-	// Each column name is matched against all patterns, settings for row titles matching a pattern will be
-	// merged together with least to greatest priority, defaults should start at the first position
-	Columns: {
-		".+":                                              {				// Row Header Names this configuration applies to
-			SkipCells: 1,       // Number of data cells to skip for calculations
-			Inverted:  false,	// Invert the zBand scores (inverts colors)
-		},
-		"Disabled|(Unsubscribe|Complaint|Bounce|Block)s?": {
-			Inverted: true,
-		},
-		"RPC|CPM|.+Rate$":                                {
-			SkipCells: 0,
-		},
-	}
-};
-
+const PLAIN    = 1,
+	  PERCENTAGE  = 2,
+		CURRENCY = 3;
 
 export class TheOneRing {
 
 	/**
 	 * @constructor
-	 * @param {TableConfig} tableConfig		The table configuration for TheOneRing
+	 * @param {object} tableConfig		The table configuration for TheOneRing
 	 */
 	constructor(tableConfig) {
 
-		this.tableConfig = new TableConfig(staticConfig);
+		this.tableConfig = new TableConfig(tableConfig);
 
 		this.zBandScale = 1.0;
 
@@ -97,10 +91,26 @@ export class TheOneRing {
 			this.toggleActive();
 			this.colorizeSelector(this.tableConfig.DataSelector);
 		});
+
 		hotkeys('h', 'active', (e, h) => {
 			this.colorizeSelector(this.tableConfig.DataSelector);
 			return false;
 		});
+
+		hotkeys('t', 'active', (e, h) => {
+			let hoverElem    = Array.from(document.querySelectorAll(':hover'))
+				.pop(),
+				closestTable = hoverElem.closest('TABLE');
+
+			if(!closestTable || !closestTable.matches(this.tableConfig.Selector))
+				return;
+
+			let cell = hoverElem.closest('TH, TD'),
+				row  = hoverElem.closest('TR');
+
+			this.ToggleTagged(cell.tagName == 'TH' ? row : cell);
+		});
+
 		hotkeys('*', 'active', (e, h) => {
 			if((e.key != '+' && e.key != '-') || e.xshiftKey || e.altKey || e.ctrlKey)
 				return;
@@ -114,6 +124,9 @@ export class TheOneRing {
 			this.colorizeSelector(this.tableConfig.DataSelector);
 			return false;
 		});
+
+		this.toggleActive();
+		this.colorizeSelector(this.tableConfig.DataSelector);
 	}
 
 	/**
@@ -138,7 +151,7 @@ export class TheOneRing {
 	initialize() {
 		this.active  = false;
 		this.onClick = this.onClick.bind(this);
-		this.tables = Array.from(document.querySelectorAll(this.tableConfig.Selector));
+		this.tables  = Array.from(document.querySelectorAll(this.tableConfig.Selector));
 //		for(let elem of this.tables)
 //			elem.addEventListener('click', this.onClick);
 	}
@@ -168,6 +181,7 @@ export class TheOneRing {
 		for(let row of document.querySelectorAll(selector))
 			this.colorizeRow(row);
 	}
+
 	/**
 	 * Colorizes the row according to analysis
 	 *
@@ -182,6 +196,12 @@ export class TheOneRing {
 		// Header is assumed to be first cell
 		let header = cells.shift();
 
+		// Remove any previous RSD__ class names
+		for(let cl of row.classList) {
+			if(cl.match(/^(RSD)/))
+				header.classList.remove(cl);
+		}
+
 		// Drop off any remaining header cells
 		for(let j = 1; j < this.tableConfig.HeaderColumns; j++)
 			cells.shift();
@@ -189,9 +209,25 @@ export class TheOneRing {
 		// Remaining cells are data
 		/** @type {Element[]} */
 		let dataElems = cells;
+		let dataType  = PLAIN;
+		if(dataElems[0].textContent.indexOf('%') >= 0)
+			dataType = PERCENTAGE;
+		else if(dataElems[0].textContent.indexOf('$') >= 0)
+			dataType = CURRENCY;
+
+		function fn(n, type = dataType) {
+			switch(type) {
+				case CURRENCY:
+					return `$${format(n)}`;
+				case PERCENTAGE:
+					return `${format(n * 100)}%`;
+			}
+			return format(n);
+		}
 
 		let rowConfig = this.tableConfig.GetColumnConfig(header.textContent);
-//		console.log(header.textContent, rowConfig);
+//		if(header.textContent.match(/Unsubscribe/))
+//			console.log(header.textContent, rowConfig);
 
 		const bands = this.tableConfig
 			.zScoreBands
@@ -205,18 +241,43 @@ export class TheOneRing {
 		// Clear any previous scoring
 		dataElems.forEach((el) => {
 			for(let cl of el.classList) {
-				if(cl.match(/^zBand/))
+				if(cl.match(/^(zBand)/))
 					el.classList.remove(cl);
 			}
 		});
 
 		let data = dataElems.map((el) => this.toNumber(el.textContent));
 
-		let mean     = math.mean(data),
-			stddev   = math.std(data),
-			variance = math.variance(data);
+		let st = {
+			min: min(data),
+			avg: mean(data),
+			max: max(data),
+			std: std(data),
+		};
+		st.RSD = st.std / st.avg;
 
-		let zData    = data.map((n) => zscore(n, mean, stddev) * (!rowConfig.Inverted || -1)),
+		let RsdClass = (() => {
+			if(st.RSD <= 0.10)
+				return 'RSD10';
+//			if(ST.RSD <= 0.15)
+//				return 'RSD15';
+//			if(ST.RSD <= 0.20)
+//				return 'RSD20';
+		})();
+		if(RsdClass)
+			row.classList.add(RsdClass);
+
+		header.setAttribute('title', stripIndent`
+			min: ${fn(st.min)}
+			max: ${fn(st.max)}
+
+			avg: ${fn(st.avg)}
+			std: ${fn(st.std)}
+
+			RSD: ${fn(st.RSD, PLAIN)}
+		`);
+
+		let zData    = data.map((n) => zscore(n, st.avg, st.std) * (!rowConfig.Inverted || -1)),
 			zSnap    = zData.map((n) => snap(n, bands)),
 			zCssName = zSnap.map((n) => {
 				let idxOffset = bands.indexOf(n) - Math.floor(bands.length / 2);
@@ -236,6 +297,7 @@ export class TheOneRing {
 //		cl('zCssName  = ', zCssName);
 
 		dataElems.forEach((el, idx) => {
+			el.setAttribute('title', fn(zData[idx], PLAIN));
 			el.classList.add(zCssName[idx]);
 		});
 		// 	-2		-1.5		1.5		2
@@ -253,5 +315,12 @@ export class TheOneRing {
 		if(n.indexOf('%') >= 0)
 			return parseFloat(n.replace(/%/, '')) / 100;
 		return parseFloat(n);
+	}
+
+	/**
+	 * @param {Element} el	The element to tag
+	 */
+	ToggleTagged(el) {
+		el.classList.toggle('Tagged');
 	}
 }

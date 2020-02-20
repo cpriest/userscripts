@@ -6,28 +6,59 @@ DIV#TableTools > DIV.State {
   text-align: right;
 }
 
-TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight :nth-child(1) {
-  background-color: #e0ffff;
-}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zSkip {
   color: #808080;
+  background-color: white;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zSkip {
+  background-color: #fff6ef;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg2 {
-  background-color: #FF0000;
   font-weight: bold;
+  background-color: #FF0000;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandNeg2 {
+  background-color: #ff776f;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg1 {
   background-color: #FFc0c0;
 }
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandNeg1 {
+  background-color: #ffd7cf;
+}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBand0 {
   background-color: white;
 }
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBand0 {
+  background-color: #fff6ef;
+}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandPos1 {
-  background-color: #c0FFc0;
+  background-color: #c0FFc0FF;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandPos1 {
+  background-color: #e0f6cf;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandPos2 {
   font-weight: bold;
   background-color: #00FF00;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandPos2 {
+  background-color: #80f66f;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.Tagged, TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > TD.Tagged {
+  outline: 2px solid deeppink !important;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover {
+  background-color: #FFEDDE;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD10 TH, TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD10 TD {
+  border-bottom: 2px solid #0F0;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD15 TH, TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD15 TD {
+  border-bottom: 2px dashed #060;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD20 TH, TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD20 TD {
+  border-bottom: 2px #060 dotted;
 }
 
 /*# sourceMappingURL=default.css.map */

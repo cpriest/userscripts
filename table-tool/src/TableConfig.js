@@ -1,4 +1,4 @@
-import { ColumnConfig } from 'ColumnConfig.js';
+import { ColumnConfig } from './ColumnConfig.js';
 
 //language=JSON5
 let sampleTableConfig = `
@@ -71,18 +71,20 @@ export class TableConfig {
 	 * @return {ColumnConfig}
 	 */
 	GetColumnConfig(header) {
-		let assembled = {};
-//		console.group(header);
+		let assembled = ColumnConfig.prototype.defaults;
+//		let log = header.match(/Unsubscribe/);
+
+//		log && console.group(header);
 		for(let [pattern, config] of Object.entries(this.columns)) {
 			if(header.match(pattern)) {
-//				console.log('%cMatched: %s', 'color: green;', pattern);
 				Object.assign(assembled, config.config);
-//			} else {
-//				console.log('%cDid not match: %s', 'color: red;', pattern);
+//				log && console.log('%cMatched: %s', 'color: green; config=%o, assembled=%o', pattern, config.config, assembled);
+			} else {
+//				log && console.log('%cDid not match: %s', 'color: red;', pattern);
 			}
 		}
-//		console.log(assembled);
-//		console.groupEnd();
+//		log && console.log(assembled);
+//		log && console.groupEnd();
 		return new ColumnConfig(this, assembled);
 	}
 }

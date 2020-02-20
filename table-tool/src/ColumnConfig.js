@@ -6,6 +6,8 @@ let sampleColumnConfig = `
 `;
 
 export class ColumnConfig {
+
+
 	/**
 	 * Constructs a ColumnConfig object with the given {options}, throws upon error
 	 *
@@ -16,11 +18,7 @@ export class ColumnConfig {
 		if(typeof options == 'string')
 			throw 'JSON5 not yet implemented';
 
-		let defaults = {
-			SkipCells: 1,       // Number of data cells to skip for calculations
-			Inverted:  false,	// Invert the zBand scores (inverts colors)
-		};
-		this.config   = Object.assign(defaults, options);
+		this.config = options;
 	}
 
 	/** @returns {number} */
@@ -29,3 +27,8 @@ export class ColumnConfig {
 	/** @returns {boolean} */
 	get Inverted() { return this.config.Inverted; }
 }
+
+ColumnConfig.prototype.defaults = {
+	SkipCells: 1,       // Number of data cells to skip for calculations
+	Inverted:  false,	// Invert the zBand scores (inverts colors)
+};
