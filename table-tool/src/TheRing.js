@@ -75,6 +75,8 @@ const PLAIN    = 1,
 	  PERCENTAGE  = 2,
 		CURRENCY = 3;
 
+//{	zzz } = a;
+
 export class TheOneRing {
 
 	/**
@@ -90,6 +92,7 @@ export class TheOneRing {
 		hotkeys('Control+\'', (e, h) => {
 			this.toggleActive();
 			this.colorizeSelector(this.tableConfig.DataSelector);
+			return false;
 		});
 
 		hotkeys('h', 'active', (e, h) => {
@@ -98,17 +101,38 @@ export class TheOneRing {
 		});
 
 		hotkeys('t', 'active', (e, h) => {
-			let hoverElem    = Array.from(document.querySelectorAll(':hover'))
-				.pop(),
-				closestTable = hoverElem.closest('TABLE');
-
-			if(!closestTable || !closestTable.matches(this.tableConfig.Selector))
+			let { table, cell, row } = this.GetValidHoverElements();
+			if(table === undefined)
 				return;
 
-			let cell = hoverElem.closest('TH, TD'),
-				row  = hoverElem.closest('TR');
-
 			this.ToggleTagged(cell.tagName == 'TH' ? row : cell);
+
+			return false;
+		});
+
+		hotkeys('left, right', 'active', (e, h) => {
+			let { table, cell, row } = this.GetValidHoverElements();
+			if(table === undefined)
+				return;
+
+			if(h.shortcut == 'left') {
+				let rowLevel = row.getAttribute('level'),
+					groupRow = row;
+
+				while(groupRow && groupRow.getAttribute('level') == rowLevel)
+					groupRow = groupRow.previousElementSibling;
+
+				if(groupRow) {
+					groupRow.firstElementChild.click();
+					return false;
+				}
+				return;
+			}
+
+			if(row.firstElementChild.classList.contains('LevelCollapse')) {
+				row.firstElementChild.click();
+				return false;
+			}
 		});
 
 		hotkeys('*', 'active', (e, h) => {
@@ -318,9 +342,28 @@ export class TheOneRing {
 	}
 
 	/**
-	 * @param {Element} el	The element to tag
+	 * @param {HTMLElement} el	The element to tag
 	 */
 	ToggleTagged(el) {
 		el.classList.toggle('Tagged');
+	}
+
+	/**
+	 * Returns {table, row, cell} under the cursor, if the elements are a part of a targeted table
+	 *
+	 * @return {{table: HTMLElement?, row: HTMLElement?, cell: HTMLElement?}}
+	 */
+	GetValidHoverElements() {
+		let hoverElem    = Array.from(document.querySelectorAll(':hover'))
+			.pop(),
+			closestTable = hoverElem.closest('TABLE');
+
+		if(!closestTable || !closestTable.matches(this.tableConfig.Selector))
+			return { };
+
+		let cell = hoverElem.closest('TH, TD'),
+			row = hoverElem.closest('TR');
+
+		return {table: closestTable, row, cell};
 	}
 }
