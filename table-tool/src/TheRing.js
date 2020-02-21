@@ -280,16 +280,8 @@ export class TheOneRing {
 		};
 		st.RSD = st.std / st.avg;
 
-		let RsdClass = (() => {
-			if(st.RSD <= 0.10)
-				return 'RSD10';
-//			if(ST.RSD <= 0.15)
-//				return 'RSD15';
-//			if(ST.RSD <= 0.20)
-//				return 'RSD20';
-		})();
-		if(RsdClass)
-			row.classList.add(RsdClass);
+		if(st.RSD <= rowConfig.RSDFilter)
+			row.classList.add('RSD10');
 
 		header.setAttribute('title', stripIndent`
 			min: ${fn(st.min)}
@@ -299,6 +291,8 @@ export class TheOneRing {
 			std: ${fn(st.std)}
 
 			RSD: ${fn(st.RSD, PLAIN)}
+			
+			RSDFilter: ${rowConfig.RSDFilter}
 		`);
 
 		let zData    = data.map((n) => zscore(n, st.avg, st.std) * (!rowConfig.Inverted || -1)),

@@ -50,6 +50,8 @@ export class TableConfig {
 
 		for(let [pattern, colOpts] of Object.entries(this.config.Columns))
 			this.columns[pattern] = new ColumnConfig(this, colOpts);
+
+		this.CCCache = { };
 	}
 
 	/** @return {string} */
@@ -71,10 +73,16 @@ export class TableConfig {
 	 * @return {ColumnConfig}
 	 */
 	GetColumnConfig(header) {
-		let assembled = ColumnConfig.prototype.defaults;
-//		let log = header.match(/Unsubscribe/);
+//		let log = true || header.match(/Unsubscribe/);
 
-//		log && console.group(header);
+		if(this.CCCache[header]) {
+//			log && console.log('%s Cached: %o', header, this.CCCache[header]);
+			return this.CCCache[header];
+		}
+
+		let assembled = Object.assign({}, ColumnConfig.prototype.defaults);
+
+//		log && console.groupCollapsed(header);
 		for(let [pattern, config] of Object.entries(this.columns)) {
 			if(header.match(pattern)) {
 				Object.assign(assembled, config.config);
@@ -85,6 +93,6 @@ export class TableConfig {
 		}
 //		log && console.log(assembled);
 //		log && console.groupEnd();
-		return new ColumnConfig(this, assembled);
+		return (this.CCCache[header] = new ColumnConfig(this, assembled));
 	}
 }

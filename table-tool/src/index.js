@@ -19,17 +19,21 @@ let TOR = new TheOneRing({
 	Columns: {
 		'.+': {					// Row Header Names this configuration applies to
 			SkipCells: 1,       // Number of data cells to skip for calculations
-			Inverted:  false,	// Invert the zBand scores (inverts colors)
+			Inverted: false,	// Invert the zBand scores (inverts colors)
+			RSDFilter: 0.1		// Skip zBand colorizing if Relative Standard Distribution is <= to this value
 		},
 
 		'Disabled|(Unsubscribe|Complaint|Bounce|Block)s?': {
 			Inverted: true,
 		},
+
 		'RPC|CPM|Revenue': {
 			SkipCells: 2,
 		},
+
 		'.+Rate$': {
 			SkipCells: 0,
+			RSDFilter: 0.05,
 		},
 	},
 });

@@ -10,14 +10,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8546cb-b283-44f7-ab99-6cdb0197f019" name="Default Changelist" comment="Added numerous features, just a checkin commit.">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Clint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Clint.xml" afterDir="false" />
+    <list default="true" id="ab8546cb-b283-44f7-ab99-6cdb0197f019" name="Default Changelist" comment="Added ability to use left/right arrows while hovering over a group to open/close it">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/table-tool/Notes.md" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/Notes.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/TamperMonkeyStub-dev.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/dist/TamperMonkeyStub-dev.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/dist/table-tool.user.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/release/table-tool.user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/src/ColumnConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/ColumnConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/src/TableConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/TableConfig.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/table-tool/src/TheRing.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/TheRing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/table-tool/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/table-tool/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +73,7 @@
       <recent name="C:\code\node\table-tool\src\class1" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.serve">
+  <component name="RunManager" selected="npm.build">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/table-tool/package.json" />
       <command value="run" />
@@ -131,7 +133,8 @@
     <MESSAGE value="Fixed an issue with zBand0 not highlighting." />
     <MESSAGE value="Added zBand scaling via +/- keys" />
     <MESSAGE value="Added numerous features, just a checkin commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added numerous features, just a checkin commit." />
+    <MESSAGE value="Added ability to use left/right arrows while hovering over a group to open/close it" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ability to use left/right arrows while hovering over a group to open/close it" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1017" y="425" key="#File_Watchers" timestamp="1581604637475">
@@ -184,33 +187,33 @@
     </state>
     <state x="659" y="301" key="FileChooserDialogImpl/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581351226383" />
     <state x="659" y="336" key="FileChooserDialogImpl/2560.-335.1200.1859/-1200.-325.1200.1890/0.0.2560.1539@0.0.2560.1539" timestamp="1581880155924" />
-    <state width="2517" height="89" key="GridCell.Tab.0.bottom" timestamp="1582307052668">
+    <state width="752" height="474" key="GridCell.Tab.0.bottom" timestamp="1582311532926">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state width="2190" height="350" key="GridCell.Tab.0.bottom/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581694125912" />
     <state width="530" height="335" key="GridCell.Tab.0.bottom/0.0.1920.1019@0.0.1920.1019" timestamp="1582169136025" />
-    <state width="2517" height="89" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582307052668" />
+    <state width="752" height="474" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582311532926" />
     <state width="2195" height="350" key="GridCell.Tab.0.bottom/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2517" height="89" key="GridCell.Tab.0.center" timestamp="1582307052667">
+    <state width="752" height="474" key="GridCell.Tab.0.center" timestamp="1582311532926">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state width="2190" height="350" key="GridCell.Tab.0.center/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581694125912" />
     <state width="530" height="335" key="GridCell.Tab.0.center/0.0.1920.1019@0.0.1920.1019" timestamp="1582169136023" />
-    <state width="2517" height="89" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582307052667" />
+    <state width="752" height="474" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582311532926" />
     <state width="2195" height="350" key="GridCell.Tab.0.center/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2517" height="89" key="GridCell.Tab.0.left" timestamp="1582307052666">
+    <state width="752" height="474" key="GridCell.Tab.0.left" timestamp="1582311532926">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state width="2190" height="350" key="GridCell.Tab.0.left/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581694125912" />
     <state width="530" height="335" key="GridCell.Tab.0.left/0.0.1920.1019@0.0.1920.1019" timestamp="1582169136023" />
-    <state width="2517" height="89" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582307052666" />
+    <state width="752" height="474" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582311532926" />
     <state width="2195" height="350" key="GridCell.Tab.0.left/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
-    <state width="2517" height="89" key="GridCell.Tab.0.right" timestamp="1582307052668">
+    <state width="752" height="474" key="GridCell.Tab.0.right" timestamp="1582311532926">
       <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state width="2190" height="350" key="GridCell.Tab.0.right/-2280.0.1080.1859/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170/0.0.2560.1379@0.0.2560.1379" timestamp="1581694125912" />
     <state width="530" height="335" key="GridCell.Tab.0.right/0.0.1920.1019@0.0.1920.1019" timestamp="1582169136024" />
-    <state width="2517" height="89" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582307052668" />
+    <state width="752" height="474" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582311532926" />
     <state width="2195" height="350" key="GridCell.Tab.0.right/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581365686244" />
     <state width="1985" height="469" key="GridCell.Tab.1.bottom" timestamp="1582226238712">
       <screen x="0" y="0" width="2560" height="1379" />
@@ -294,20 +297,24 @@
     </state>
     <state x="0" y="0" width="1920" height="1019" key="find.popup/0.0.1920.1019@0.0.1920.1019" timestamp="1581823411257" />
     <state x="0" y="0" width="2560" height="1379" key="find.popup/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581351951589" />
+    <state width="600" height="440" key="javadoc.popup" timestamp="1582311021319">
+      <screen x="0" y="0" width="2560" height="1379" />
+    </state>
     <state width="733" height="500" key="javadoc.popup.new" timestamp="1581812615802">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="733" height="500" key="javadoc.popup.new/0.0.1920.1019@0.0.1920.1019" timestamp="1581812615802" />
+    <state width="600" height="440" key="javadoc.popup/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582311021319" />
     <state x="702" y="240" key="run.anything.popup" timestamp="1582108480972">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="702" y="240" key="run.anything.popup/0.0.1920.1019@0.0.1920.1019" timestamp="1582108480972" />
     <state x="936" y="325" key="run.anything.popup/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581352052264" />
-    <state x="623" y="219" width="672" height="678" key="search.everywhere.popup" timestamp="1582169838463">
-      <screen x="0" y="0" width="1920" height="1019" />
+    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup" timestamp="1582311006383">
+      <screen x="0" y="0" width="2560" height="1379" />
     </state>
     <state x="623" y="219" width="672" height="678" key="search.everywhere.popup/0.0.1920.1019@0.0.1920.1019" timestamp="1582169838463" />
-    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582123050175" />
+    <state x="831" y="296" width="896" height="918" key="search.everywhere.popup/0.0.2560.1379/-2280.0.1080.1890/-1200.0.1200.1890/2560.135.1200.1570/3760.345.1600.1170@0.0.2560.1379" timestamp="1582311006383" />
     <state x="831" y="296" width="896" height="918" key="search.everywhere.popup/0.0.2560.1379/-2280.0.1080.1890/2560.135.1200.1570/-1200.0.1200.1890/3760.345.1600.1170@0.0.2560.1379" timestamp="1581359921894" />
     <state x="831" y="331" width="896" height="1024" key="search.everywhere.popup/2560.-335.1200.1859/-1200.-325.1200.1890/0.0.2560.1539@0.0.2560.1539" timestamp="1581880445372" />
   </component>
