@@ -1,13 +1,14 @@
 {
 	"name": "table-tool",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"description": "Provides useful tools for TABLE elements",
 	"main": "index.js",
 	"author": "Clint Priest",
 	"license": "MIT",
 	"scripts": {
 		"serve": "cross-env NODE_ENV=development webpack-dev-server",
-		"build": "cross-env NODE_ENV=production webpack"
+		"build": "cross-env NODE_ENV=production webpack",
+		"build-test": "cross-env NODE_ENV=production webpack --verbose"
 	},
 	"dependencies": {
 		"hotkeys-js": "^3.7.3",
