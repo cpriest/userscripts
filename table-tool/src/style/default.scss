@@ -12,13 +12,19 @@ TABLE.ttActive[jsclass="CrossTable"] {
 	TR.ttHighlight {
 		$RowHoverColor: #FFEDDE;
 
+		&.ttSelected > TH {
+			background-color: #F0F0FF !important;
+		}
+
 		@mixin zBand($name, $color, $color2) {
 			> .#{$name} {
 				@content;
 				background-color: $color;
 			}
 			&:hover > .#{$name} {
-				background-color: mix($color, $color2);
+				@if $color == white {
+					background-color: $color2;
+				}
 			}
 		}
 

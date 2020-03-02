@@ -7,7 +7,6 @@
 import {TheOneRing} from './TheRing';
 import './style/default.css';
 
-
 let TOR = new TheOneRing({
 	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
 	DataSelector:  'TR.DataRow',					// CSS Selector to select which rows are data rows

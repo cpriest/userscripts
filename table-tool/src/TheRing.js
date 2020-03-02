@@ -25,6 +25,7 @@ export function clamp(n, bottom = 0.0, top = 1.0) {
 	return n;
 }
 
+
 /**
  * Remaps a 0-1 number n to the range of start - end
  *
@@ -100,6 +101,9 @@ export class TheOneRing {
 			return false;
 		});
 
+		/**
+		 * (t)ag hovered cell
+		 */
 		hotkeys('t', 'active', (e, h) => {
 			let { table, cell, row } = this.GetValidHoverElements();
 			if(table === undefined)
@@ -123,6 +127,7 @@ export class TheOneRing {
 					groupRow = groupRow.previousElementSibling;
 
 				if(groupRow) {
+					window.scrollBy(0, groupRow.clientHeight);
 					groupRow.firstElementChild.click();
 					return false;
 				}
@@ -278,7 +283,7 @@ export class TheOneRing {
 			max: max(data),
 			std: std(data),
 		};
-		st.RSD = st.std / st.avg;
+		st.RSD = Math.round(st.std / st.avg * 100) / 100;
 
 		if(st.RSD <= rowConfig.RSDFilter)
 			row.classList.add('RSD10');

@@ -6,44 +6,35 @@ DIV#TableTools > DIV.State {
   text-align: right;
 }
 
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.ttSelected > TH {
+  background-color: #F0F0FF !important;
+}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zSkip {
   color: #808080;
   background-color: white;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zSkip {
-  background-color: #fff6ef;
+  background-color: #FFEDDE;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg2 {
   font-weight: bold;
   background-color: #FF0000;
 }
-TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandNeg2 {
-  background-color: #ff776f;
-}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg1 {
   background-color: #FFc0c0;
-}
-TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandNeg1 {
-  background-color: #ffd7cf;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBand0 {
   background-color: white;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBand0 {
-  background-color: #fff6ef;
+  background-color: #FFEDDE;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandPos1 {
   background-color: #c0FFc0FF;
 }
-TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandPos1 {
-  background-color: #e0f6cf;
-}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandPos2 {
   font-weight: bold;
   background-color: #00FF00;
-}
-TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBandPos2 {
-  background-color: #80f66f;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.Tagged, TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > TD.Tagged {
   outline: 2px solid deeppink !important;

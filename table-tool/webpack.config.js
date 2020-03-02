@@ -37,6 +37,7 @@ module.exports = {
 			'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
 		},
 	},
+	devtool: 'eval-source-map',
 //	watchOptions: {
 //		aggregateTimeout: 1000,
 //	},
