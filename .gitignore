@@ -63,3 +63,5 @@ typings/
 .history
 node_modules
 *.bak
+/table-tool/release/table-tool.user.js.map.meta.js
+/table-tool/release/table-tool.user.js.map.user.js

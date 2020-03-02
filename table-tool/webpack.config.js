@@ -1,20 +1,36 @@
 const path              = require('path');
 const WebpackUserscript = require('webpack-userscript');
 
-const { outputDir, version, updateURL } = {
+const { outputDir, version, updateURL, envConfig } = {
 	development: {
+		envConfig: {
+			devServer: {
+				contentBase:      path.join(__dirname, 'dist'),
+				https:            true,
+				disableHostCheck: true,
+				headers:          {
+					'Access-Control-Allow-Origin':  '*',
+					'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+					'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+				},
+			},
+			devtool: 'source-map',
+		},
 		outputDir: 'dist',
 		version:   `[version]-build.[buildTime]`,
 		updateURL: 'http://localhost:8080/table-tool.user.js',
 	},
-	production:  {
+	production: {
+		envConfig: {
+			devtool: 'source-map',
+		},
 		outputDir: 'release',
 		version:   `[version]`,
 		updateURL: 'https://raw.githubusercontent.com/cpriest/userscripts/master/table-tool/release/table-tool.user.js',
 	},
 }[process.env.NODE_ENV];
 
-module.exports = {
+let baseConfig = {
 	mode:         process.env.NODE_ENV,
 	optimization: {
 		usedExports:
@@ -27,17 +43,6 @@ module.exports = {
 		path:     path.resolve(__dirname, outputDir),
 		filename: '[name].user.js',
 	},
-	devServer:    {
-		contentBase: path.join(__dirname, outputDir),
-		https: true,
-		disableHostCheck: true,
-		headers: {
-			'Access-Control-Allow-Origin':  '*',
-			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-			'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
-		},
-	},
-	devtool: 'eval-source-map',
 //	watchOptions: {
 //		aggregateTimeout: 1000,
 //	},
@@ -75,3 +80,5 @@ module.exports = {
 		}),
 	],
 };
+
+module.exports = Object.assign({}, baseConfig, envConfig);
