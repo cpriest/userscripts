@@ -27,18 +27,6 @@ export class TheOneRing {
 			return false;
 		});
 
-		/**
-		 * (t)ag hovered cell
-		 */
-		hotkeys('t', 'active', (e, h) => {
-			let { table, cell, row } = this.GetValidHoverElements();
-			if(table === undefined)
-				return;
-
-			this.ToggleTagged(cell.tagName == 'TH' ? row : cell);
-
-			return false;
-		});
 
 		hotkeys('left, right', 'active', (e, h) => {
 			let { table, cell, row } = this.GetValidHoverElements();
@@ -124,30 +112,4 @@ export class TheOneRing {
 //
 //		row.classList.toggle('ttSelected');
 //	}
-
-	/**
-	 * @param {HTMLElement} el	The element to tag
-	 */
-	ToggleTagged(el) {
-		el.classList.toggle('Tagged');
-	}
-
-	/**
-	 * Returns {table, row, cell} under the cursor, if the elements are a part of a targeted table
-	 *
-	 * @return {{table: HTMLElement?, row: HTMLElement?, cell: HTMLElement?}}
-	 */
-	GetValidHoverElements() {
-		let hoverElem    = Array.from(document.querySelectorAll(':hover'))
-			.pop(),
-			closestTable = hoverElem.closest('TABLE');
-
-		if(!closestTable || !closestTable.matches(this.tableConfig.Selector))
-			return { };
-
-		let cell = hoverElem.closest('TH, TD'),
-			row = hoverElem.closest('TR');
-
-		return {table: closestTable, row, cell};
-	}
 }

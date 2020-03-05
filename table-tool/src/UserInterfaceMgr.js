@@ -2,6 +2,7 @@ import {TheOneRing} from './TheRing';
 import hotkeys from 'hotkeys-js';
 import {TableConfig} from './TableConfig';
 import {TableMarker} from './TableMarker';
+import * as Modes from './Mode';
 
 let tableConfig = {
 	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
@@ -26,6 +27,10 @@ let tableConfig = {
 			SkipCells: 2,
 		},
 
+		'RPC|CPM': {
+			RSDFilter: 0.05,
+		},
+
 		'.+Rate$': {
 			SkipCells: 0,
 			RSDFilter: 0.05,
@@ -48,10 +53,19 @@ export class UserInterfaceMgr {
 			zBandScale: 1.0,
 		}
 
+		this.modes = Object.entries(Modes)
+			.reduce((acc, [name, klass]) => {
+				acc[name] = new klass(this);
+				return acc;
+			}, {});
+
+		hotkeys.setScope('inactive');
+
 		hotkeys('Control+\'', (e, h) => {
 			this.toggleActive();
 			return false;
 		});
+		this.toggleActive();
 	}
 
 	/**
@@ -68,13 +82,13 @@ export class UserInterfaceMgr {
 			tm.active = this.active;
 
 		if(this.active) {
-//			hotkeys.setScope('active');
+			hotkeys.setScope('active');
 //			for(let el of this.tables)
 //				el.classList.add('ttActive');
 			this.bar.style.display = '';
 			return;
 		}
-//		hotkeys.setScope('all');
+		hotkeys.setScope('inactive');
 //		for(let el of this.tables)
 //			el.classList.remove('ttActive');
 		this.bar.style.display = 'none';
@@ -95,4 +109,27 @@ export class UserInterfaceMgr {
 				return new TableMarker(el, this.tableConfig, this.prefs);
 			});
 	}
+
+	/**
+	 * Returns {table, row, cell} under the cursor, if the elements are a part of a targeted table
+	 *
+	 * @return {{table: HTMLElement?, row: HTMLElement?, cell: HTMLElement?}}
+	 */
+	GetValidHoverElements() {
+		let hoverElem = Array
+			.from(
+				document.querySelectorAll(':hover'))
+			.pop();
+
+		let closestTable = hoverElem && hoverElem.closest('TABLE');
+
+		if(!closestTable || !closestTable.matches(this.tableConfig.Selector))
+			return {};
+
+		let cell = hoverElem.closest('TH, TD'),
+			row  = hoverElem.closest('TR');
+
+		return { table: closestTable, row, cell };
+	}
+
 }
