@@ -28,31 +28,6 @@ export class TheOneRing {
 		});
 
 
-		hotkeys('left, right', 'active', (e, h) => {
-			let { table, cell, row } = this.GetValidHoverElements();
-			if(table === undefined)
-				return;
-
-			if(h.shortcut == 'left') {
-				let rowLevel = row.getAttribute('level'),
-					groupRow = row;
-
-				while(groupRow && groupRow.getAttribute('level') == rowLevel)
-					groupRow = groupRow.previousElementSibling;
-
-				if(groupRow) {
-					window.scrollBy(0, groupRow.clientHeight);
-					groupRow.firstElementChild.click();
-					return false;
-				}
-				return;
-			}
-
-			if(row.firstElementChild.classList.contains('LevelCollapse')) {
-				row.firstElementChild.click();
-				return false;
-			}
-		});
 		hotkeys('esc', 'active', (e, h) => {
 			for(let el of document.querySelectorAll(`${this.tableConfig.Selector} ${this.tableConfig.DataSelector}.ttSelected`))
 				el.classList.remove('ttSelected');
