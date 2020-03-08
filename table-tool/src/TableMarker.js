@@ -32,14 +32,29 @@ export class TableMarker {
 	constructor(tableEl, tableConfig, prefs) {
 		this.tableEl     = tableEl;
 		this.tableConfig = tableConfig;
-		this.prefs       = prefs;
-		this.colorize();
+		this.prefs = prefs;
+
+		this.onClick = this.onClick.bind(this);
+		this.tableEl.addEventListener('click', this.onClick);
 
 		this.prefs.on('zBandScale', (value, prev) => {
 			window.requestAnimationFrame(() => {
 				this.colorize();
 			})
 		})
+
+		this.colorize();
+	}
+
+	onClick(e) {
+		if(!this.active)
+			return;
+
+		let row = e.target.closest(this.tableConfig.DataSelector);
+		if(!row)
+			return;
+
+		row.classList.toggle('ttSelected');
 	}
 
 	/**
@@ -170,4 +185,5 @@ export class TableMarker {
 			return format(n);
 		}
 	}
+
 }

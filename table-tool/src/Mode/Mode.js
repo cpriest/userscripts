@@ -2,6 +2,18 @@
 
 export class ModeBase {
 	/**
+	 * Alias to UI.prefs
+	 * @return {Observable}
+	 */
+	get prefs() { return this.UI.prefs; }
+
+	/**
+	 * Alias to UI.tableConfig
+	 * @return {TableConfig}
+	 */
+	get tableConfig() { return this.UI.tableConfig; }
+
+	/**
 	 * Base constructor for Modes
 	 * @param {UserInterfaceMgr} UI
 	 */

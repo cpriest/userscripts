@@ -14,7 +14,7 @@ export class TheOneRing {
 
 		this.tableConfig = new TableConfig(tableConfig);
 
-		this.zBandScale = 1.0;
+//		this.zBandScale = 1.0;
 
 //		hotkeys('s', 'active', (e, h) => {
 //			console.log('s in active,select mode');
@@ -28,10 +28,6 @@ export class TheOneRing {
 //		});
 
 
-		hotkeys('esc', 'active', (e, h) => {
-			for(let el of document.querySelectorAll(`${this.tableConfig.Selector} ${this.tableConfig.DataSelector}.ttSelected`))
-				el.classList.remove('ttSelected');
-		});
 
 	}
 
@@ -64,14 +60,4 @@ export class TheOneRing {
 //			elem.addEventListener('click', this.onClick);
 	}
 
-//	onClick(e) {
-//		if(!this.active)
-//			return;
-//
-//		let row = e.target.closest(this.tableConfig.DataSelector);
-//		if(!row)
-//			return;
-//
-//		row.classList.toggle('ttSelected');
-//	}
 }

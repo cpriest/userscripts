@@ -2,7 +2,6 @@ import {ModeBase} from './Mode.js';
 import hotkeys from 'hotkeys-js';
 
 export class Active extends ModeBase {
-	get prefs() { return this.UI.prefs; }
 
 	constructor(UI) {
 		super(UI);
@@ -61,6 +60,19 @@ export class Active extends ModeBase {
 			this.prefs.zBandScale = Math.max(.1, this.prefs.zBandScale + adjust);
 
 			return false;
+		});
+
+
+		/**
+		 * Technically this is part of 'select' mode, which isn't fully fleshed out or even in the long
+		 * term plans (as of now), but moving it here from TheRing.js to keep it around
+		 */
+		hotkeys('esc', 'active', (e, h) => {
+			if(['active'].indexOf(hotkeys.getScope()) === -1)
+				return;
+
+			for(let el of document.querySelectorAll(`${this.tableConfig.Selector} ${this.tableConfig.DataSelector}.ttSelected`))
+				el.classList.remove('ttSelected');
 		});
 	}
 
