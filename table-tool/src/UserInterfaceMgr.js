@@ -1,4 +1,3 @@
-import {TheOneRing} from './TheRing';
 import hotkeys from 'hotkeys-js';
 import {TableConfig} from './TableConfig';
 import {TableMarker} from './TableMarker';
@@ -47,8 +46,6 @@ export class UserInterfaceMgr {
 	set keysText(x) { this.bar.left[1] = x; }
 
 	constructor() {
-		this.TOR = new TheOneRing(tableConfig);
-
 		this.tableConfig = new TableConfig(tableConfig);
 
 		this.prefs = observable({
@@ -74,7 +71,6 @@ export class UserInterfaceMgr {
 	 * Activates and initializes or deactivates if not active
 	 */
 	toggleActive() {
-		this.TOR.toggleActive();
 		if(this.active === undefined)
 			this.initialize();
 
@@ -85,14 +81,10 @@ export class UserInterfaceMgr {
 
 		if(this.active) {
 			hotkeys.setScope('active');
-//			for(let el of this.tables)
-//				el.classList.add('ttActive');
 			this.bar.style.display = '';
 			return;
 		}
 		hotkeys.setScope('inactive');
-//		for(let el of this.tables)
-//			el.classList.remove('ttActive');
 		this.bar.style.display = 'none';
 	}
 

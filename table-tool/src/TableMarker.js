@@ -27,7 +27,7 @@ export class TableMarker {
 	/**
 	 * @param {HTMLTableElement} tableEl
 	 * @param {TableConfig} tableConfig
-	 * @param {observable} prefs
+	 * @param {Observable} prefs
 	 */
 	constructor(tableEl, tableConfig, prefs) {
 		this.tableEl     = tableEl;
