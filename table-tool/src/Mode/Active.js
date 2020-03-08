@@ -2,6 +2,8 @@ import {ModeBase} from './Mode.js';
 import hotkeys from 'hotkeys-js';
 
 export class Active extends ModeBase {
+	get prefs() { return this.UI.prefs; }
+
 	constructor(UI) {
 		super(UI);
 
@@ -44,6 +46,21 @@ export class Active extends ModeBase {
 				row.firstElementChild.click();
 				return false;
 			}
+		});
+		hotkeys('-,shift:=,+,=', { splitKey: ':' }, (e, h) => {
+			if(['active'].indexOf(hotkeys.getScope()) === -1 || e.altKey || e.ctrlKey)
+				return;
+
+			if(e.key === '=') {
+				this.prefs.zBandScale = 1.0;
+				return false;
+			}
+
+			let adjust = 0.050 * (e.key == '+' || -1);
+
+			this.prefs.zBandScale = Math.max(.1, this.prefs.zBandScale + adjust);
+
+			return false;
 		});
 	}
 

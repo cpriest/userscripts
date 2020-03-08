@@ -16,16 +16,16 @@ export class TheOneRing {
 
 		this.zBandScale = 1.0;
 
-		hotkeys('s', 'active', (e, h) => {
-			console.log('s in active,select mode');
-			hotkeys.setScope('select');
-		})
-
-		hotkeys('h', 'select', (e, h) => {
-			console.log('h in select mode');
-//			this.colorizeSelector(this.tableConfig.DataSelector);
-			return false;
-		});
+//		hotkeys('s', 'active', (e, h) => {
+//			console.log('s in active,select mode');
+//			hotkeys.setScope('select');
+//		})
+//
+//		hotkeys('h', 'select', (e, h) => {
+//			console.log('h in select mode');
+////			this.colorizeSelector(this.tableConfig.DataSelector);
+//			return false;
+//		});
 
 
 		hotkeys('esc', 'active', (e, h) => {
@@ -33,19 +33,6 @@ export class TheOneRing {
 				el.classList.remove('ttSelected');
 		});
 
-		hotkeys('*', 'active', (e, h) => {
-			if((e.key != '+' && e.key != '-') || e.xshiftKey || e.altKey || e.ctrlKey)
-				return;
-
-			let adjust = .05 * (e.key == '+' || -1);
-
-			this.zBandScale = Math.max(.1, this.zBandScale + adjust);
-			console.log('zScale Now %.1f', this.zBandScale);
-//			console.log(e.key, e.keyCode, e, h);
-
-			this.colorizeSelector(this.tableConfig.DataSelector);
-			return false;
-		});
 	}
 
 	/**

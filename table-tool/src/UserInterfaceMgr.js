@@ -2,7 +2,9 @@ import {TheOneRing} from './TheRing';
 import hotkeys from 'hotkeys-js';
 import {TableConfig} from './TableConfig';
 import {TableMarker} from './TableMarker';
+import 'lit-status-bar/src/status-bar.js'
 import * as Modes from './Mode';
+import observable from 'proxy-observable/src/observable';
 
 let tableConfig = {
 	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
@@ -49,9 +51,9 @@ export class UserInterfaceMgr {
 
 		this.tableConfig = new TableConfig(tableConfig);
 
-		this.prefs = {
+		this.prefs = observable({
 			zBandScale: 1.0,
-		}
+		});
 
 		this.modes = Object.entries(Modes)
 			.reduce((acc, [name, klass]) => {

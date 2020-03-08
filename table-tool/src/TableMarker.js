@@ -27,13 +27,19 @@ export class TableMarker {
 	/**
 	 * @param {HTMLTableElement} tableEl
 	 * @param {TableConfig} tableConfig
-	 * @param {object} prefs
+	 * @param {observable} prefs
 	 */
 	constructor(tableEl, tableConfig, prefs) {
 		this.tableEl     = tableEl;
 		this.tableConfig = tableConfig;
 		this.prefs       = prefs;
 		this.colorize();
+
+		this.prefs.on('zBandScale', (value, prev) => {
+			window.requestAnimationFrame(() => {
+				this.colorize();
+			})
+		})
 	}
 
 	/**
