@@ -2,6 +2,7 @@ import hotkeys from 'hotkeys-js';
 import {TableConfig} from './TableConfig';
 import {TableMarker} from './TableMarker';
 import 'lit-status-bar/src/status-bar.js'
+import ScoreBand from './webcom/score-band';
 import * as Modes from './Mode';
 import observable from 'proxy-observable/src/observable';
 
@@ -91,17 +92,26 @@ export class UserInterfaceMgr {
 	initialize() {
 		this.active = false;
 
+		this.ScoreBandUI = new ScoreBand();
+		this.ScoreBandUI.bands = this.tableConfig.zScoreBands;
+		this.ScoreBandUI.colors = ['#F00', '#FFC0C0', '#FFF', '#C0FFC0','#0F0'];
+
 		document.body.insertAdjacentHTML('beforeend', '<status-bar></status-bar>');
 		this.bar = document.body.lastElementChild
 
 		this.bar.style.display = 'none';
 
 		this.bar.right = 'table-tools';
+		this.bar.left[0] = this.ScoreBandUI;
 
 		this.tables = Array.from(document.querySelectorAll(this.tableConfig.Selector))
 			.map((el) => {
 				return new TableMarker(el, this.tableConfig, this.prefs);
 			});
+
+		this.prefs.on('zBandScale', (value, prev) => {
+			window.requestAnimationFrame(() => this.ScoreBandUI.scale = value)
+		})
 	}
 
 	/**
