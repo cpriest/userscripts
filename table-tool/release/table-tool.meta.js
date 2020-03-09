@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        table-tool
-// @version     0.4.2
+// @version     0.5.0
 // @author      Clint Priest
 // @description Provides useful tools for TABLE elements
 // @homepage    https://github.com/cpriest/userscripts/tree/master/table-tool/
