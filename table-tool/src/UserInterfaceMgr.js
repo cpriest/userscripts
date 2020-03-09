@@ -46,6 +46,10 @@ let tableConfig = {
 export class UserInterfaceMgr {
 	set keysText(x) { this.bar.left[1] = x; }
 
+	get mode() { return this._mode; }
+
+	set mode(m) { this._mode = m; }
+
 	constructor() {
 		this.tableConfig = new TableConfig(tableConfig);
 
@@ -101,8 +105,12 @@ export class UserInterfaceMgr {
 
 		this.bar.style.display = 'none';
 
+
 		this.bar.right = 'table-tools';
 		this.bar.left[0] = this.ScoreBandUI;
+		this.bar.center[0] = '<abbr title="Tag element under cursor">[t]ag</abbr>';
+		this.bar.center[1] = '<abbr title="Expand/collapse group under cursor">[⭠ ➝]</abbr>';
+		this.bar.center[2] = '<abbr title="Scale/Reset zBandScale">[+/-/=]</abbr>';
 
 		this.tables = Array.from(document.querySelectorAll(this.tableConfig.Selector))
 			.map((el) => {
