@@ -10,4 +10,4 @@
 * ☐ Performance Benchmark
 * ☐ zScore Based Sparkline/SparkBar
 * ☐ RSD Filter only if no zVal outside of inner band
-* 
+* ☐ Notion of Inverted needs to apply to colors, not zScore

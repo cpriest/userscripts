@@ -70,7 +70,22 @@ TABLE.ttActive[jsclass="CrossTable"] {
 		//		//border-bottom: 2px solid red !important;
 		//	}
 		//}
+		DIV.ttPlots {
+			white-space: nowrap;
 
+			> SPAN:nth-child(1) {
+				font-family: "Fira Code", monospace;
+				font-size: 10px;
+			}
+			> SPAN:nth-child(2) {
+				width: 50px;
+			}
+			> SPAN {
+				vertical-align: middle;
+				display: inline-block;
+				padding: 0px 1px;
+			}
+		}
 		&.RSD10 {
 			TH, TD {
 				border-bottom: 2px solid #0F0;

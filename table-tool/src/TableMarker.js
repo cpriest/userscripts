@@ -2,7 +2,8 @@ import {TableConfig} from './TableConfig';
 import {max, mean, min, std} from 'mathjs';
 import {stripIndent} from 'common-tags';
 import {format, snap, zscore} from './util';
-
+import jQuery from 'jquery';
+import 'jquery-sparkline';
 
 const PLAIN      = 1,
 		PERCENTAGE = 2,
@@ -32,7 +33,7 @@ export class TableMarker {
 	constructor(tableEl, tableConfig, prefs) {
 		this.tableEl     = tableEl;
 		this.tableConfig = tableConfig;
-		this.prefs = prefs;
+		this.prefs       = prefs;
 
 		this.onClick = this.onClick.bind(this);
 		this.tableEl.addEventListener('click', this.onClick);
@@ -41,7 +42,7 @@ export class TableMarker {
 			window.requestAnimationFrame(() => {
 				this.colorize();
 			})
-		})
+		});
 
 		this.colorize();
 	}
@@ -84,7 +85,12 @@ export class TableMarker {
 
 		// Drop off any remaining header cells
 		for(let j = 1; j < this.tableConfig.HeaderColumns; j++)
-			cells.shift();
+			cells.shift()
+
+		// Use empty column for sparkline
+		let emptyElem = cells.shift();
+		emptyElem.innerHTML = '<div class="ttPlots"><span title="Relative Standard Deviation"></span><span></span><span></span></div>';
+		let [derivativeStatsElem, boxPlotElem, zSparkElem] = emptyElem.children[0].children;
 
 		// Remaining cells are data
 		/** @type {Element[]} */
@@ -98,6 +104,8 @@ export class TableMarker {
 			.zScoreBands
 			.map((n) => n * this.prefs.zBandScale);
 
+		let dataPointsCount = dataElems.length;
+
 		for(let j = 0; j < rowConfig.SkipCells; j++) {
 			let cell = dataElems.shift();
 			cell.classList.add('zSkip');
@@ -107,7 +115,13 @@ export class TableMarker {
 		for(let el of dataElems)
 			el.className = el.className.replace(/\bzBand\w+\b/, '');
 
-		let data = dataElems.map((el) => this.toNumber(el.textContent));
+		dataElems = dataElems
+			.filter(el => el.textContent.length);
+		if(dataElems.length == 0)
+			return;
+
+		let data = dataElems
+			.map((el) => this.toNumber(el.textContent));
 
 		let st = {
 			min: min(data),
@@ -117,8 +131,11 @@ export class TableMarker {
 		};
 		st.RSD = Math.round(st.std / st.avg * 100) / 100;
 
-		if(st.RSD <= rowConfig.RSDFilter)
-			row.classList.add('RSD10');
+		derivativeStatsElem.innerText = stripIndent`
+			${ fn(st.RSD, PLAIN) }
+		`;
+//		if(st.RSD <= rowConfig.RSDFilter)
+//			row.classList.add('RSD10');
 
 		header.setAttribute('title', stripIndent`
 			min: ${fn(st.min)}
@@ -145,7 +162,78 @@ export class TableMarker {
 		dataElems.forEach((el, idx) => {
 			el.setAttribute('title', fn(zData[idx], PLAIN));
 			el.classList.add(zCssName[idx]);
+		})
+
+		let hlElem;
+
+		function tooltipFormatter(line, options, [{ value, color, isNull, offset: index}]) {
+			return `
+				<div><span style="color: ${color};">&#9679;</span> zScore: ${fn(value, PLAIN)}</div>
+				<div>value: ${fn(data[index])}</div>
+			`;
+		}
+
+		let plotWidth = ((dataPointsCount * 4) + dataPointsCount - 1) + 'px';
+
+		zSparkElem.style.width = plotWidth;
+		emptyElem.style.padding = '1px';
+		let zMax = Math.max(...zData.map(n => Math.abs(n)));
+
+		jQuery(zSparkElem)
+			.sparkline(zData, {
+				type:     'bar',
+				zeroValueColor: '#D0D0D0',
+				nullValueColor: '#D0D0D0',
+				colorMap: {
+					':-2':      '#CC0000',
+					'-2:-1.3':  '#FFA0A0',
+					'-1.3:1.3': '#C0C0C0',
+					'1.3:2':    '#90FF90',
+					'2:':       '#00AA00',
+				},
+				tooltipFormatter,
+				height: 19,
+				zeroAxis: true,
+				tooltipOffsetY: 25,
+				chartRangeMin: -zMax,
+				chartRangeMax: zMax,
+			})
+			.bind('sparklineRegionChange', (ev) => {
+				if(hlElem)
+					hlElem.style.outline = '';
+				let [ { offset: index}] = ev.sparklines[0].getCurrentRegionFields();
+				hlElem = dataElems[index];
+				if(hlElem)
+					hlElem.style.outline = '2px dotted #FF00FF';
+			})
+			.bind('mouseleave', (ev) => {
+				if(hlElem)
+					hlElem.style.outline = '';
+			});
+
+		boxPlotElem.style.display = 'none';
+/*
+//		let boxData = data.map((i) => {
+		let boxData = zData.map((i) => {
+			return i+10;
+//			if(fn.dataType === PERCENTAGE)
+//				return i * 100;
+//			return i;
 		});
+		jQuery(boxPlotElem)
+			.sparkline(boxData, {
+				type: 'box',
+				width: 50,
+				outlierFillColor: '#FF00FF',
+				outlierLineColor: '#FF00FF',
+				tooltipOffsetY: 25,
+				numberFormatter: (i) => {
+//					if(fn.dataType === PERCENTAGE)
+//						return fn(i / 100);
+					return fn(i-10, PLAIN);
+				},
+		});
+*/
 	}
 
 	/**
@@ -175,15 +263,19 @@ export class TableMarker {
 		else if(dataElem.textContent.indexOf('$') >= 0)
 			dataType = CURRENCY;
 
-		return function fn(n, type) {
+		let fn = function fn(n, type) {
 			switch(type || dataType) {
 				case CURRENCY:
 					return `$${format(n)}`;
 				case PERCENTAGE:
 					return `${format(n * 100)}%`;
 			}
+			if(isNaN(n))
+				return format(0);
 			return format(n);
 		}
+		fn.dataType = dataType;
+		return fn;
 	}
 
 }

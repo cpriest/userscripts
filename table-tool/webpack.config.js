@@ -5,6 +5,9 @@ const { outputDir, version, updateURL, envConfig } = {
 	development: {
 		envConfig: {
 			devServer: {
+				hot: false,
+				hotOnly: false,
+				liveReload: false,
 				contentBase:      path.join(__dirname, 'dist'),
 				https:            true,
 				disableHostCheck: true,

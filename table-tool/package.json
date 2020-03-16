@@ -18,12 +18,15 @@
 	"peerDependencies": {
 		"webpack": "^4.41.6",
 		"webpack-cli": "^3.3.11",
-		"webpack-dev-server": "^3.10.3"
+		"webpack-dev-server": "^3.10.3",
+		"sass": "^1.26.3"
 	},
 	"devDependencies": {
 		"common-tags": "^1.8.0",
 		"cross-env": "^7.0.0",
 		"css-loader": "^3.4.2",
+		"jquery": "^3.4.1",
+		"jquery-sparkline": "^2.4.0",
 		"lit-element": "^2.2.1",
 		"proxy-observable": "^4.0.4",
 		"style-loader": "^1.1.3",

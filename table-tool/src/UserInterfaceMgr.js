@@ -9,7 +9,7 @@ import observable from 'proxy-observable/src/observable';
 let tableConfig = {
 	Selector:      'TABLE[jsclass=CrossTable]',		// CSS Selector to target which tables are targetable
 	DataSelector:  'TR.DataRow',					// CSS Selector to select which rows are data rows
-	HeaderColumns: 4,								// Column count which are not considered data
+	HeaderColumns: 3,								// Column count which are not considered data
 	zScoreBands:   [-2.0, -1.3, 0.0, 1.3, 2.0],		// The zScore bounds to which zScores will be (fix)ed to
 
 	// Each column name is matched against all patterns, settings for row titles matching a pattern will be
@@ -104,7 +104,6 @@ export class UserInterfaceMgr {
 		this.bar = document.body.lastElementChild
 
 		this.bar.style.display = 'none';
-
 
 		this.bar.right = 'table-tools';
 		this.bar.left[0] = this.ScoreBandUI;

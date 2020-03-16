@@ -9,7 +9,7 @@ export function format(n) {
 }
 
 export function zscore(n, mean, stddev) {
-	return (n - mean) / stddev;
+	return ((n - mean) / stddev) || null;
 }
 
 export function clamp(n, bottom = 0.0, top = 1.0) {

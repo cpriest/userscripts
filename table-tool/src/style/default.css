@@ -42,6 +42,21 @@ TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.Tagged, TABLE.ttActive[jsclass
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover {
   background-color: #FFEDDE;
 }
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight DIV.ttPlots {
+  white-space: nowrap;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight DIV.ttPlots > SPAN:nth-child(1) {
+  font-family: "Fira Code", monospace;
+  font-size: 10px;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight DIV.ttPlots > SPAN:nth-child(2) {
+  width: 50px;
+}
+TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight DIV.ttPlots > SPAN {
+  vertical-align: middle;
+  display: inline-block;
+  padding: 0px 1px;
+}
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD10 TH, TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.RSD10 TD {
   border-bottom: 2px solid #0F0;
 }
