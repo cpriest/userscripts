@@ -24,7 +24,7 @@
 		"cross-env": "^7.0.0",
 		"css-loader": "^3.4.2",
 		"hotkeys-js": "^3.7.3",
-		"jquery": "^3.4.1",
+		"jquery": "^3.5.0",
 		"jquery-sparkline": "^2.4.0",
 		"lit-element": "^2.2.1",
 		"mathjs": "^7.0.0",
