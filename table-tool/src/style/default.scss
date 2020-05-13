@@ -4,7 +4,7 @@ DIV#TableTools {
   	position: absolute;
 	> DIV.State {
 		position: absolute;
-	  text-align: right;
+		text-align: right;
 	}
 }
 
@@ -19,16 +19,18 @@ TABLE.ttActive[jsclass="CrossTable"] {
 		@mixin zBand($name, $color, $color2) {
 			> .#{$name} {
 				@content;
-				background-color: $color;
+				@if $color != transparent {
+					background-color: $color;
+				}
 			}
 			&:hover > .#{$name} {
-				@if $color == white {
+				@if $color == transparent {
 					background-color: $color2;
 				}
 			}
 		}
 
-		@include zBand(zSkip, white, $RowHoverColor) {
+		@include zBand(zSkip, transparent, $RowHoverColor) {
 			color: #808080;
 		}
 
@@ -40,7 +42,7 @@ TABLE.ttActive[jsclass="CrossTable"] {
 
 		}
 
-		@include zBand(zBand0, white, $RowHoverColor) {
+		@include zBand(zBand0, transparent, $RowHoverColor) {
 
 		}
 

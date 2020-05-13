@@ -11,7 +11,6 @@ TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight.ttSelected > TH {
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zSkip {
   color: #808080;
-  background-color: white;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zSkip {
   background-color: #FFEDDE;
@@ -22,9 +21,6 @@ TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg2 {
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBandNeg1 {
   background-color: #FFc0c0;
-}
-TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight > .zBand0 {
-  background-color: white;
 }
 TABLE.ttActive[jsclass=CrossTable] TR.ttHighlight:hover > .zBand0 {
   background-color: #FFEDDE;
