@@ -28,7 +28,7 @@
  *    <+ Would like to +>
  *        - Copy Links as actual links, rather than text of html... can GM_setClipboard be used with an element?
  *        - Copy images
- *        - Enter 'selection mode' via ctrl + ctrl or some other combination whereby what's being targeted (initialy :hover, later navigable ala CustomizeYourWeb?? -- U, D) is outlined
+ *        - Enter 'selection mode' via ctrl + ctrl or some other combination whereby what's being targeted (initially :hover, later navigable ala CustomizeYourWeb?? -- U, D) is outlined
  */
 
 const CTRL  = 1,
@@ -42,6 +42,7 @@ const SC_FOCUS   = 'CopyThat_FC',
 const Selector_NotVisible = ':not([style*="display:none"]):not([style*="display: none"]):not([style*="visibility:hidden"]):not([style*="visibility: hidden"])';
 const Selector_FormInputs = 'INPUT[type=text],INPUT[type=password],INPUT[type=search],SELECT,TEXTAREA';
 
+//noinspection JSUnusedGlobalSymbols
 const VK_C         = 'c',
 	  VK_V         = 'v',
 	  VK_D         = 'd',
