@@ -1,0 +1,82 @@
+.CopyThat_A_Copied {
+  display: inline-block;
+  animation: CopyThat_ExpandGhost 500ms ease-out 0s 1;
+}
+@keyframes CopyThat_ExpandGhost {
+  70% {
+    opacity: .5;
+    transform: scale(0.95, 0.95);
+  }
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: .0;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 0 1px, #00ff00 0 0 3px, #00ff00 0 0 10px;
+  }
+}
+.CopyThat_Pasted {
+  display: inline-block;
+  animation: CopyThat_ExpandGhost 500ms ease-in 0s 1 reverse;
+}
+.CopyThat_FC {
+  box-shadow: 0 0 75px rgba(255, 0, 0, 0.6), 0 0 55px rgba(255, 0, 0, 0.6), 0 0 35px rgba(255, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.6), 0 0 5px rgba(255, 0, 0, 0.6);
+}
+.CopyThat_FCt {
+  transition: all 500ms linear !important;
+  box-shadow: none;
+}
+#CopyThat_Panel {
+  position: fixed;
+  right: 0;
+  top: 20px;
+  z-index: 99999 !important;
+  padding: 0px !important;
+}
+#CopyThat_Panel A {
+  text-decoration: underline;
+  color: blue;
+}
+#CopyThat_Panel > div {
+  font: 11px Verdana !important;
+  box-shadow: 0 0 1px white, 0 0 3px white, 0 0 10px white, 0 0 10px white;
+  border-radius: 5px 0px 0px 5px;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  padding: 8px 8px 8px 8px !important;
+  color: white !important;
+  position: relative !important;
+  margin: 0px !important;
+  transition: all 0.75s cubic-bezier(0.25, 1, 0.25, 1) !important;
+  box-sizing: border-box;
+}
+#CopyThat_Panel > div > h5 {
+  color: white !important;
+  font: bold 12px Verdana !important;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 5px 0px;
+}
+#CopyThat_Panel > div > div:nth-of-type(1) {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  margin: 0px !important;
+  border-radius: 3px 3px;
+  box-shadow: 0 0 2px white;
+  padding: 6px !important;
+}
+#CopyThat_Panel > div > div:nth-of-type(2) {
+  margin: 5px 0px 0px 0px !important;
+  padding: 0px !important;
+  height: 4px !important;
+}
+#CopyThat_Panel > div > div:nth-of-type(2) > div {
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: deepskyblue !important;
+  transition: all 0s linear 1s !important;
+}
+#CopyThat_Panel > div > div:nth-of-type(2) > div.go {
+  transition: all 5s linear !important;
+  width: 0% !important;
+}
+#CopyThat_Panel > div.open {
+  right: 0px;
+}
