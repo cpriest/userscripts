@@ -74,19 +74,19 @@ function HighlightInput(el) {
 }
 
 
-var gc = this;
+let gc = this;
 
 class TableOperations {
 	Handle(e) {
 		if(!isInputField(document.activeElement))
 			return false;
 
-		var TD = document.activeElement.parentNode;
+		let TD = document.activeElement.parentNode;
 		if(TD.tagName !== 'TD')
 			return false;
 
 		const _Selector = 'INPUT[type=text], INPUT[type=password]';
-		var VisibleRows = TD.parentNode.parentNode.querySelectorAll(':scope > TR' + Selector_NotVisible),
+		let VisibleRows = TD.parentNode.parentNode.querySelectorAll(':scope > TR' + Selector_NotVisible),
 			RowIndex    = Array.from(VisibleRows)
 				.indexOf(TD.parentNode),
 			RowInputs   = TD.parentNode.querySelectorAll(_Selector),
@@ -97,7 +97,7 @@ class TableOperations {
 			return false;
 
 		try {
-			var Target = null;
+			let Target = null;
 			switch(e.key) {
 				case 'd':	// Fill Down 1 cell
 				case 'D':	// Fill Down 1 cell
@@ -154,9 +154,9 @@ class CycleFormInputs {
 	/**
 	 * Switches to the next non-form input
 	 *
-	 * @param ae    {DocumentView}    document.activeElement
-	 * @param e        {Event}            Event triggering this call
-	 * @returns    {Boolean}        True if event was acted upon
+	 * @param ae    {DocumentView}   document.activeElement
+	 * @param e     {Event}          Event triggering this call
+	 * @returns     {Boolean}        True if event was acted upon
 	 * @constructor
 	 */
 	Handle(ae, e) {
@@ -304,7 +304,7 @@ class BackslashHandler {
 }
 
 
-var CopyHandlers = (function() {
+let CopyHandlers = (function() {
 
 	function CopyPageLink(e) {
 		// let clip = '<a href="' + elem.href + '">' + elem.textContent + '</a>';
@@ -334,12 +334,12 @@ var CopyHandlers = (function() {
 			return true;
 		} else {
 			let tValues = [];
-			for(var opt of elem.options) {
+			for(let opt of elem.options) {
 				if(opt.selected)
 					tValues.push(opt.textContent.trim());
 			}
 
-			CopyToClipboard(tValues.join("\r\n"));
+			CopyToClipboard(tValues.join('\r\n'));
 			animate(elem, 'CopyThat_A_Copied');
 			return true;
 		}
@@ -404,7 +404,7 @@ class CopyHandler {
 	}
 }
 
-var PasteHandlers = (function() {
+let PasteHandlers = (function() {
 
 	function PasteSelect(e, elem) {
 		let clipText = e.clipboardData.getData('text/plain');
@@ -416,7 +416,7 @@ var PasteHandlers = (function() {
 
 		if(elem.multiple != true) {
 			clipText = clipText.trim();
-			for(var opt of elem.options) {
+			for(let opt of elem.options) {
 				if(opt.text.trim() == clipText) {
 					elem.value = opt.value;
 					break;
@@ -429,7 +429,7 @@ var PasteHandlers = (function() {
 			let tValues = clipText
 				.split(/[\r\n]+/)
 				.map(String.trim);
-			for(var opt of elem.options) {
+			for(let opt of elem.options) {
 				opt.selected = (tValues.indexOf(opt.textContent.trim()) != -1);
 			}
 
@@ -474,19 +474,19 @@ document.addEventListener('paste', function(e) {
 }, true);
 
 document.addEventListener('copy', function(e) {
-//	console.log('copy - ', e);
+	console.log('copy - ', e);
 }, true);
 
-//var CycleInputs_Old = (function() {
+//let CycleInputs_Old = (function() {
 //
 //	/** @param {Array} nfInputs - Global non-form inputs */
-//	var nfInputs = undefined;
+//	let nfInputs = undefined;
 //
 //	/** @param {Array} Forms - All forms on page */
-//	var Forms = undefined;
+//	let Forms = undefined;
 //
 //	/** @param {HTMLElement} LastInput - The last input that was cycled */
-//	var LastInput = undefined;
+//	let LastInput = undefined;
 
 //	/**
 //	 * Find:
@@ -629,9 +629,9 @@ document.addEventListener('copy', function(e) {
 //})();
 
 
-var styleInserted = false;
+let styleInserted = false;
 
-var panel = {
+let panel = {
 	inserted: false,
 };
 
@@ -693,7 +693,7 @@ function hasDocumentSelection() {
  */
 function animate(el, className) {
 	addStyles();
-	var animEnd = () => {
+	let animEnd = () => {
 		el.removeEventListener('animationend', animEnd);
 		el.classList.remove(className);
 	};
@@ -772,10 +772,11 @@ function animate(el, className) {
  */
 
 const KeyCommands = [
-	{ Class: TableOperations, mods: CTRL, Keys: [ 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End' ], },
-	{ Class: TableOperations, mods: CTRL + SHIFT, Keys: [ 'D' ], },
+	{ Class: TableOperations, mods: CTRL, Keys: [ 'd', ] },
+	{ Class: TableOperations, mods: ALT,  Keys: [ 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End' ] },
+	{ Class: TableOperations, mods: CTRL + SHIFT, Keys: [ 'D' ] },
 	{ Class: BackslashHandler, Keys: [ '\\' ] },
-	{ Class: CopyHandler, mods: CTRL, Keys: [ 'c', ] }
+	{ Class: CopyHandler, mods: CTRL, Keys: [ 'c' ] },
 ];
 
 new (class KeyCommandRouter {
@@ -785,7 +786,7 @@ new (class KeyCommandRouter {
 
 	onKeyDown(e) {
 		e.mods = (e.ctrlKey) + (e.altKey << 1) + (e.shiftKey << 2);
-		for(var cmd of KeyCommands) {
+		for(let cmd of KeyCommands) {
 			if((cmd.mods || 0) == e.mods && cmd.Keys.indexOf(e.key) != -1) {
 				if(!cmd.obj)
 					cmd.obj = new cmd.Class();
@@ -807,6 +808,6 @@ new (class KeyCommandRouter {
 for(let elem of document.querySelectorAll('SELECT[multiple]')) {
 	elem.addEventListener('mouseenter', function(e) {
 		let tSelected  = Array.prototype.map.call(Array.from(e.target.selectedOptions), (opt) => opt.textContent.trim());
-		e.target.title = `Selected: ${ e.target.selectedOptions.length } \n${ tSelected.join("\r\n") }`;
+		e.target.title = `Selected: ${ e.target.selectedOptions.length } \n${ tSelected.join('\r\n') }`;
 	});
 }
