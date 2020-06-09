@@ -14,9 +14,9 @@
 // @grant		GM_getClipboard
 // @grant		GM_getResourceText
 // @grant		GM_addStyle
-// @xxxupdateURL	http://www.clintpriest.com/GM/CopyThat/CopyThat.user.js
-// @resource	CopyThat_Style	http://www.clintpriest.com/GM/CopyThat/style.css
-// @resource	CopyThat_Panel	http://www.clintpriest.com/GM/CopyThat/Panel.htm
+// @updateURL	https://raw.githubusercontent.com/cpriest/userscripts/master/CopyThat/CopyThat.user.js
+// @resource	CopyThat_Style	https://raw.githubusercontent.com/cpriest/userscripts/master/CopyThat/style.css
+// @resource	CopyThat_Panel	https://raw.githubusercontent.com/cpriest/userscripts/master/CopyThat/Panel.htm
 // @run-at		document-end
 // ==/UserScript==
 
