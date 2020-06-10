@@ -9,7 +9,7 @@
 // @include     *
 // @exclude		/^https?://docs.google.com/.+$/
 // @exclude		/^https?://app.asana.com2
-// @version     1.0.4
+// @version     1.0.5
 // @grant       GM_setClipboard
 // @grant		GM_getClipboard
 // @grant		GM_getResourceText
@@ -32,27 +32,27 @@
  */
 
 const CTRL  = 1,
-	  ALT   = 2,
-	  SHIFT = 4;
+		ALT   = 2,
+		SHIFT = 4;
 
 /** Stylesheet Class - Focus & Transition */
 const SC_FOCUS   = 'CopyThat_FC',
-	  SC_FOCUS_T = 'CopyThat_FCt';
+		SC_FOCUS_T = 'CopyThat_FCt';
 
 const Selector_NotVisible = ':not([style*="display:none"]):not([style*="display: none"]):not([style*="visibility:hidden"]):not([style*="visibility: hidden"])';
 const Selector_FormInputs = 'INPUT[type=text],INPUT[type=password],INPUT[type=search],SELECT,TEXTAREA';
 
 //noinspection JSUnusedGlobalSymbols
 const VK_C         = 'c',
-	  VK_V         = 'v',
-	  VK_D         = 'd',
-	  VK_UP        = KeyboardEvent.DOM_VK_UP,
-	  VK_DOWN      = KeyboardEvent.DOM_VK_DOWN,
-	  VK_LEFT      = KeyboardEvent.DOM_VK_LEFT,
-	  VK_RIGHT     = KeyboardEvent.DOM_VK_RIGHT,
-	  VK_HOME      = KeyboardEvent.DOM_VK_HOME,
-	  VK_END       = KeyboardEvent.DOM_VK_END,
-	  VK_BACKSLASH = KeyboardEvent.DOM_VK_BACK_SLASH;
+		VK_V         = 'v',
+		VK_D         = 'd',
+		VK_UP        = KeyboardEvent.DOM_VK_UP,
+		VK_DOWN      = KeyboardEvent.DOM_VK_DOWN,
+		VK_LEFT      = KeyboardEvent.DOM_VK_LEFT,
+		VK_RIGHT     = KeyboardEvent.DOM_VK_RIGHT,
+		VK_HOME      = KeyboardEvent.DOM_VK_HOME,
+		VK_END       = KeyboardEvent.DOM_VK_END,
+		VK_BACKSLASH = KeyboardEvent.DOM_VK_BACK_SLASH;
 
 /** Returns true if the given element is an input field we care about **/
 function isInputField(el) {
@@ -257,8 +257,8 @@ class CycleNonFormInputs {
 			this.LastInput = nfInputs[x];
 
 		if(([ 'INPUT', 'SELECT', 'TEXTAREA' ].indexOf(e.target.tagName) == -1 || ae == this.LastInput ||
-		   (e.target.tagName == 'INPUT' && [ 'text', 'search', 'password' ].indexOf(e.target.type) == -1)) ||
-		   (e.target.tagName == 'INPUT' && e.target.selectionStart == 0 && e.target.selectionEnd == e.target.value.length)) {
+			(e.target.tagName == 'INPUT' && [ 'text', 'search', 'password' ].indexOf(e.target.type) == -1)) ||
+			(e.target.tagName == 'INPUT' && e.target.selectionStart == 0 && e.target.selectionEnd == e.target.value.length)) {
 //			console.log(this.LastInput);
 			if(this.LastInput != undefined) {
 //				console.log('1');
@@ -306,6 +306,61 @@ class BackslashHandler {
 
 
 let CopyHandlers = (function() {
+
+	/**
+	 * Iterates over immediate children which are #text nodes and joins the textContent properties with a space
+	 * @param {HTMLHtmlElement} elem
+	 * @return string
+	 */
+	function GetChildTextContent(elem) {
+		return Array.from(elem.childNodes)
+			.filter(el => el.nodeType == 3)
+			.map(el => el.textContent)
+			.join(' ');
+	}
+
+	/**
+	 * Handler for copying parts of a DropDownEdit (JSClass)
+	 *
+	 * @param {Event} e
+	 * @param {HTMLHtmlElement} elem
+	 */
+	function DropDownEditHandler(e, elem) {
+		if(elem.tagName == 'DIV') {
+			CopyToClipboard(GetChildTextContent(elem));
+			return true;
+		}
+
+		if(elem.tagName == 'SPAN') {
+			let itemType = elem.textContent;
+			console.log(itemType);
+
+			let allItems = Array.from(elem.parentElement.parentElement
+				.querySelectorAll('DIV'),
+				)
+				.filter((elem) =>
+					elem.children[1].textContent == itemType,
+				);
+
+			return CopyToClipboard(
+				allItems
+					.map(GetChildTextContent)
+					.join('|'),
+			)
+		}
+		console.log('DropDownEditHandler - Dont know what to do with %o', elem);
+	}
+
+	/**
+	 * Handler for copying a DropDownEdit (JSClass) list in its entirety
+	 *
+	 * @param {Event} e
+	 * @param {HTMLHtmlElement} elem
+	 */
+	function DropDownEditCopyHandler(e, elem) {
+		console.log('DropDownEditCopyHandler not yet implemented');
+		return true;
+	}
 
 	function CopyPageLink(e) {
 		// let clip = '<a href="' + elem.href + '">' + elem.textContent + '</a>';
@@ -364,45 +419,98 @@ let CopyHandlers = (function() {
 	}
 
 	function CopyToClipboard(msg) {
-//		console.log('CopyThat: Copied To Clipboard: "%s"', msg);
+		console.log('Copied To Clipboard: "%s"', msg);
 		GM_setClipboard(msg);
+		return true;
 	}
 
 	return {
-		'A':        CopyAnchor,
-		'SELECT':   CopySelect,
-		'OPTION':   CopySelect,
-		'OPTGROUP': CopySelect,
-		'TD':       CopyTextContent,
-		'TR':       CopyTextContent,
-		'TH':       CopyTextContent,
-		'DIV':      CopyTextContent,
-		'P':        CopyTextContent,
-		'SPAN':     CopyTextContent,
-		'INPUT':    CopyValue,
-		'LABEL':    CopyTextContent,
-		'PRE':      CopyTextContent,
-		'TEXTAREA': CopyValue,
-		'BODY':     CopyPageLink,
+		'Down':         {
+			'DIV[jsclass="DropDownEditSelections"] > DIV > SPAN': DropDownEditHandler,
+			'DIV[jsclass="DropDownEditSelections"] > DIV':        DropDownEditHandler,
+			'DIV[jsclass="DropDownEditSelections"]':              DropDownEditCopyHandler,
+		},
+		'Up':           {
+			'A':        CopyAnchor,
+			'SELECT':   CopySelect,
+			'OPTION':   CopySelect,
+			'OPTGROUP': CopySelect,
+			'TD':       CopyTextContent,
+			'TR':       CopyTextContent,
+			'TH':       CopyTextContent,
+			'DIV':      CopyTextContent,
+			'P':        CopyTextContent,
+			'SPAN':     CopyTextContent,
+			'INPUT':    CopyValue,
+			'LABEL':    CopyTextContent,
+			'PRE':      CopyTextContent,
+			'TEXTAREA': CopyValue,
+			'BODY':     CopyPageLink,
+		},
+		'CopyPageLink': CopyPageLink,
 	}
 }());
 
 class CopyHandler {
 	Handle(e) {
-		if(!isInputField(document.activeElement) && !hasDocumentSelection()) {
-			let tHoverPath = Array.from(document.querySelectorAll(':hover'))
-				.reverse();
+		if(isInputField(document.activeElement) || hasDocumentSelection())
+			return false;
+		let tHoverPath = Array.from(document.querySelectorAll(':hover'));
 
-			let method = CopyHandlers.BODY;
+		if(this.SelectorMatchHandler(tHoverPath, CopyHandlers.Down, e))
+			return true;
 
-			if(tHoverPath.length > 0 && CopyHandlers[tHoverPath[0].tagName])
-				method = CopyHandlers[tHoverPath[0].tagName];
+		if(this.ElementMatchHandler(tHoverPath.reverse(), CopyHandlers.Up, e))
+			return true;
 
-			if(method && method(e, ...tHoverPath))
-				return true;
+		if(tHoverPath.length === 0) {
+			CopyHandlers.CopyPageLink(e);
+			return true;
+		}
+	}
+
+	/**
+	 * Checks each element in ElementPath for a selector match against {SelectorFns} in priority
+	 * 	of selector order
+	 *
+	 * @param {HTMLHtmlElement[]} ElementPath	The path of elements to search for matches
+	 * @param {object} SelectorFns				The map of CSS Selector : HandlerFn to check against
+	 * @param {Event} e							The originating event to be handled
+	 * @constructor
+	 */
+	SelectorMatchHandler(ElementPath, SelectorFns, e) {
+		for(let selector of Object.keys(SelectorFns)) {
+			for(let elem of ElementPath) {
+				if(elem.matches(selector)) {
+					if(SelectorFns[selector](e, elem))
+						return true;
+				}
+			}
 		}
 		return false;
 	}
+
+	/**
+	 * Checks each element in ElementPath for a selector match against {SelectorFns} in priority of
+	 * 	element order
+	 *
+	 * @param {HTMLHtmlElement[]} ElementPath	The path of elements to search for matches
+	 * @param {object} SelectorFns				The map of CSS Selector : HandlerFn to check against
+	 * @param {Event} e							The originating event to be handled
+	 * @constructor
+	 */
+	ElementMatchHandler(ElementPath, SelectorFns, e) {
+		for(let elem of ElementPath) {
+			for(let selector of Object.keys(SelectorFns)) {
+				if(elem.matches(selector)) {
+					if(SelectorFns[selector](e, elem))
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
 }
 
 let PasteHandlers = (function() {
@@ -475,7 +583,7 @@ document.addEventListener('paste', function(e) {
 }, true);
 
 document.addEventListener('copy', function(e) {
-	console.log('copy - ', e);
+//	console.log('copy - ', e);
 }, true);
 
 //let CycleInputs_Old = (function() {
@@ -664,11 +772,11 @@ function ShowPanel(header, content) {
 //	console.log(panel);
 
 	panel.Header.innerHTML  = header && (typeof header != 'string')
-							  ? header.outerHTML
-							  : header || '';
+								? header.outerHTML
+								: header || '';
 	panel.Content.innerHTML = content && (typeof content != 'string')
-							  ? content.outerHTML
-							  : content || '';
+								? content.outerHTML
+								: content || '';
 	panel.Elem.classList.add('open');
 
 //	panel.Progress.classList.add('go');
@@ -684,7 +792,7 @@ function ShowPanel(header, content) {
 /** Returns true if the document has a selection **/
 function hasDocumentSelection() {
 	return document.getSelection()
-			   .toString().length > 0;
+				.toString().length > 0;
 }
 
 /**
@@ -773,8 +881,8 @@ function animate(el, className) {
  */
 
 const KeyCommands = [
-	{ Class: TableOperations, mods: CTRL, Keys: [ 'd', ] },
-	{ Class: TableOperations, mods: ALT,  Keys: [ 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End' ] },
+	{ Class: TableOperations, mods: CTRL, Keys: [ 'd' ] },
+	{ Class: TableOperations, mods: ALT, Keys: [ 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End' ] },
 	{ Class: TableOperations, mods: CTRL + SHIFT, Keys: [ 'D' ] },
 	{ Class: BackslashHandler, Keys: [ '\\' ] },
 	{ Class: CopyHandler, mods: CTRL, Keys: [ 'c' ] },
