@@ -32,27 +32,27 @@
  */
 
 const CTRL  = 1,
-		ALT   = 2,
-		SHIFT = 4;
+	  ALT   = 2,
+	  SHIFT = 4;
 
 /** Stylesheet Class - Focus & Transition */
 const SC_FOCUS   = 'CopyThat_FC',
-		SC_FOCUS_T = 'CopyThat_FCt';
+	  SC_FOCUS_T = 'CopyThat_FCt';
 
 const Selector_NotVisible = ':not([style*="display:none"]):not([style*="display: none"]):not([style*="visibility:hidden"]):not([style*="visibility: hidden"])';
 const Selector_FormInputs = 'INPUT[type=text],INPUT[type=password],INPUT[type=search],SELECT,TEXTAREA';
 
 //noinspection JSUnusedGlobalSymbols
 const VK_C         = 'c',
-		VK_V         = 'v',
-		VK_D         = 'd',
-		VK_UP        = KeyboardEvent.DOM_VK_UP,
-		VK_DOWN      = KeyboardEvent.DOM_VK_DOWN,
-		VK_LEFT      = KeyboardEvent.DOM_VK_LEFT,
-		VK_RIGHT     = KeyboardEvent.DOM_VK_RIGHT,
-		VK_HOME      = KeyboardEvent.DOM_VK_HOME,
-		VK_END       = KeyboardEvent.DOM_VK_END,
-		VK_BACKSLASH = KeyboardEvent.DOM_VK_BACK_SLASH;
+	  VK_V         = 'v',
+	  VK_D         = 'd',
+	  VK_UP        = KeyboardEvent.DOM_VK_UP,
+	  VK_DOWN      = KeyboardEvent.DOM_VK_DOWN,
+	  VK_LEFT      = KeyboardEvent.DOM_VK_LEFT,
+	  VK_RIGHT     = KeyboardEvent.DOM_VK_RIGHT,
+	  VK_HOME      = KeyboardEvent.DOM_VK_HOME,
+	  VK_END       = KeyboardEvent.DOM_VK_END,
+	  VK_BACKSLASH = KeyboardEvent.DOM_VK_BACK_SLASH;
 
 /** Returns true if the given element is an input field we care about **/
 function isInputField(el) {
@@ -257,8 +257,8 @@ class CycleNonFormInputs {
 			this.LastInput = nfInputs[x];
 
 		if(([ 'INPUT', 'SELECT', 'TEXTAREA' ].indexOf(e.target.tagName) == -1 || ae == this.LastInput ||
-			(e.target.tagName == 'INPUT' && [ 'text', 'search', 'password' ].indexOf(e.target.type) == -1)) ||
-			(e.target.tagName == 'INPUT' && e.target.selectionStart == 0 && e.target.selectionEnd == e.target.value.length)) {
+		   (e.target.tagName == 'INPUT' && [ 'text', 'search', 'password' ].indexOf(e.target.type) == -1)) ||
+		   (e.target.tagName == 'INPUT' && e.target.selectionStart == 0 && e.target.selectionEnd == e.target.value.length)) {
 //			console.log(this.LastInput);
 			if(this.LastInput != undefined) {
 //				console.log('1');
@@ -336,7 +336,7 @@ let CopyHandlers = (function() {
 			console.log(itemType);
 
 			let allItems = Array.from(elem.parentElement.parentElement
-				.querySelectorAll('DIV'),
+					.querySelectorAll('DIV'),
 				)
 				.filter((elem) =>
 					elem.children[1].textContent == itemType,
@@ -772,11 +772,11 @@ function ShowPanel(header, content) {
 //	console.log(panel);
 
 	panel.Header.innerHTML  = header && (typeof header != 'string')
-								? header.outerHTML
-								: header || '';
+							  ? header.outerHTML
+							  : header || '';
 	panel.Content.innerHTML = content && (typeof content != 'string')
-								? content.outerHTML
-								: content || '';
+							  ? content.outerHTML
+							  : content || '';
 	panel.Elem.classList.add('open');
 
 //	panel.Progress.classList.add('go');
@@ -792,7 +792,7 @@ function ShowPanel(header, content) {
 /** Returns true if the document has a selection **/
 function hasDocumentSelection() {
 	return document.getSelection()
-				.toString().length > 0;
+			   .toString().length > 0;
 }
 
 /**
@@ -885,6 +885,7 @@ const KeyCommands = [
 	{ Class: TableOperations, mods: ALT, Keys: [ 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End' ] },
 	{ Class: TableOperations, mods: CTRL + SHIFT, Keys: [ 'D' ] },
 	{ Class: BackslashHandler, Keys: [ '\\' ] },
+	{ Class: BackslashHandler, mods: CTRL, Keys: [ '\\' ] },
 	{ Class: CopyHandler, mods: CTRL, Keys: [ 'c' ] },
 ];
 
@@ -920,3 +921,10 @@ for(let elem of document.querySelectorAll('SELECT[multiple]')) {
 		e.target.title = `Selected: ${ e.target.selectedOptions.length } \n${ tSelected.join('\r\n') }`;
 	});
 }
+
+
+/*
+ | Remove autocomplete=off from FORM elements
+ */
+for(let elem of document.querySelectorAll('FORM[autocomplete="off"]'))
+	elem.removeAttribute('autocomplete');
