@@ -27,7 +27,7 @@
 		"jquery": "^3.5.0",
 		"jquery-sparkline": "^2.4.0",
 		"lit-element": "^2.2.1",
-		"mathjs": "^7.0.0",
+		"mathjs": "^7.5.1",
 		"proxy-observable": "^4.0.4",
 		"style-loader": "^1.1.3",
 		"tippy.js": "^6.2.3",
