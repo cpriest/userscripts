@@ -413,6 +413,7 @@ let CopyHandlers = (function () {
 
     function CopyToClipboard(msg) {
         console.log('Copied To Clipboard: "%s"', msg);
+        // noinspection JSUnresolvedReference
         GM_setClipboard(msg);
         return true;
     }
@@ -742,6 +743,7 @@ let panel = {
 function addStyles() {
     if (!styleInserted) {
         styleInserted = true;
+        // noinspection JSUnresolvedReference
         GM_addStyle(GM_getResourceText('CopyThat_Style'));
     }
 }
@@ -752,6 +754,7 @@ function ShowPanel(header, content) {
         addStyles();
         panel.inserted = true;
         let Container = document.createElement('div');
+        // noinspection JSUnresolvedReference
         Container.innerHTML = GM_getResourceText('CopyThat_Panel');
 
         document.body.appendChild(Container.firstElementChild);
