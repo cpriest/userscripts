@@ -8,8 +8,8 @@
 // 				a page selection or active element
 // @include     *
 // @exclude		/^https?://docs.google.com/.+$/
-// @exclude		/^https?://app.asana.com2
-// @version     1.0.5
+// @exclude		/^https?://app.asana.com
+// @version     1.0.6
 // @grant       GM_setClipboard
 // @grant		GM_getClipboard
 // @grant		GM_getResourceText
@@ -31,558 +31,552 @@
  *        - Enter 'selection mode' via ctrl + ctrl or some other combination whereby what's being targeted (initially :hover, later navigable ala CustomizeYourWeb?? -- U, D) is outlined
  */
 
-const CTRL  = 1,
-	  ALT   = 2,
-	  SHIFT = 4;
+const CTRL = 1,
+    ALT = 2,
+    SHIFT = 4;
 
 /** Stylesheet Class - Focus & Transition */
-const SC_FOCUS   = 'CopyThat_FC',
-	  SC_FOCUS_T = 'CopyThat_FCt';
+const SC_FOCUS = 'CopyThat_FC',
+    SC_FOCUS_T = 'CopyThat_FCt';
 
 const Selector_NotVisible = ':not([style*="display:none"]):not([style*="display: none"]):not([style*="visibility:hidden"]):not([style*="visibility: hidden"])';
 const Selector_FormInputs = 'INPUT[type=text],INPUT[type=password],INPUT[type=search],SELECT,TEXTAREA';
 
 //noinspection JSUnusedGlobalSymbols
-const VK_C         = 'c',
-	  VK_V         = 'v',
-	  VK_D         = 'd',
-	  VK_UP        = KeyboardEvent.DOM_VK_UP,
-	  VK_DOWN      = KeyboardEvent.DOM_VK_DOWN,
-	  VK_LEFT      = KeyboardEvent.DOM_VK_LEFT,
-	  VK_RIGHT     = KeyboardEvent.DOM_VK_RIGHT,
-	  VK_HOME      = KeyboardEvent.DOM_VK_HOME,
-	  VK_END       = KeyboardEvent.DOM_VK_END,
-	  VK_BACKSLASH = KeyboardEvent.DOM_VK_BACK_SLASH;
+const VK_C = 'c',
+    VK_V = 'v',
+    VK_D = 'd',
+    VK_UP = KeyboardEvent.DOM_VK_UP,
+    VK_DOWN = KeyboardEvent.DOM_VK_DOWN,
+    VK_LEFT = KeyboardEvent.DOM_VK_LEFT,
+    VK_RIGHT = KeyboardEvent.DOM_VK_RIGHT,
+    VK_HOME = KeyboardEvent.DOM_VK_HOME,
+    VK_END = KeyboardEvent.DOM_VK_END,
+    VK_BACKSLASH = KeyboardEvent.DOM_VK_BACK_SLASH;
 
 /** Returns true if the given element is an input field we care about **/
 function isInputField(el) {
-	return el.tagName == 'TEXTAREA' || (el.tagName == 'INPUT' && [ 'text', 'password' ].indexOf(el.type) != -1);
+    return el.tagName == 'TEXTAREA' || (el.tagName == 'INPUT' && ['text', 'password'].indexOf(el.type) != -1);
 }
 
 function HighlightInput(el) {
-	addStyles();
+    addStyles();
 
-	function te() {
-		this.removeEventListener('transitionend', this);
-		this.classList.remove(SC_FOCUS, SC_FOCUS_T);
-	}
+    function te() {
+        this.removeEventListener('transitionend', this);
+        this.classList.remove(SC_FOCUS, SC_FOCUS_T);
+    }
 
-	el.classList.add(SC_FOCUS);
-	setTimeout(() => {
-		el.classList.add(SC_FOCUS_T);
-		el.addEventListener('transitionend', te);
-	}, 10);
+    el.classList.add(SC_FOCUS);
+    setTimeout(() => {
+        el.classList.add(SC_FOCUS_T);
+        el.addEventListener('transitionend', te);
+    }, 10);
 }
 
-
-let gc = this;
-
 class TableOperations {
-	Handle(e) {
-		if(!isInputField(document.activeElement))
-			return false;
+    Handle(e) {
+        if (!isInputField(document.activeElement))
+            return false;
 
-		let TD = document.activeElement.parentNode;
-		if(TD.tagName !== 'TD')
-			return false;
+        let TD = document.activeElement.parentNode;
+        if (TD.tagName !== 'TD')
+            return false;
 
-		const _Selector = 'INPUT[type=text], INPUT[type=password]';
-		let VisibleRows = TD.parentNode.parentNode.querySelectorAll(':scope > TR' + Selector_NotVisible),
-			RowIndex    = Array.from(VisibleRows)
-				.indexOf(TD.parentNode),
-			RowInputs   = TD.parentNode.querySelectorAll(_Selector),
-			InputIndex  = Array.from(RowInputs)
-				.indexOf(document.activeElement);
+        const _Selector = 'INPUT[type=text], INPUT[type=password]';
+        let VisibleRows = TD.parentNode.parentNode.querySelectorAll(':scope > TR' + Selector_NotVisible),
+            RowIndex = Array.from(VisibleRows)
+                .indexOf(TD.parentNode),
+            RowInputs = TD.parentNode.querySelectorAll(_Selector),
+            InputIndex = Array.from(RowInputs)
+                .indexOf(document.activeElement);
 
-		if(InputIndex < 0)
-			return false;
+        if (InputIndex < 0)
+            return false;
 
-		try {
-			let Target = null;
-			switch(e.key) {
-				case 'd':	// Fill Down 1 cell
-				case 'D':	// Fill Down 1 cell
-					if(e.mods == CTRL) {
-						if(RowIndex + 1 < VisibleRows.length) {
-							Target       = VisibleRows[RowIndex + 1].querySelectorAll(_Selector)[InputIndex];
-							Target.value = document.activeElement.value;
-						}
-					} else if(e.mods == CTRL + SHIFT) {
-						while(RowIndex + 1 < VisibleRows.length) {
-							Target       = VisibleRows[RowIndex + 1].querySelectorAll(_Selector)[InputIndex];
-							Target.value = document.activeElement.value;
-							RowIndex++;
-						}
-					}
-					break;
-				case 'ArrowUp':
-					if(RowIndex - 1 >= 0)
-						Target = VisibleRows[RowIndex - 1].querySelectorAll(_Selector)[InputIndex];
-					break;
-				case 'ArrowDown':
-					if(RowIndex + 1 < VisibleRows.length)
-						Target = VisibleRows[RowIndex + 1].querySelectorAll(_Selector)[InputIndex];
-					break;
-				case 'ArrowLeft':
-					Target = RowInputs[InputIndex - 1];
-					break;
-				case 'ArrowRight':
-					Target = RowInputs[InputIndex + 1];
-					break;
-				case 'Home':
-					Target = VisibleRows[0].querySelectorAll(_Selector)[InputIndex];
-					break;
-				case 'End':
-					Target = VisibleRows[VisibleRows.length - 1].querySelectorAll(_Selector)[InputIndex];
-					break;
-			}
-			if(Target) {
-				Target.focus();
-				Target.select();
-			}
-		} catch(e) {
-			console.error(e);
-		}
-		return true;
-	}
+        try {
+            let Target = null;
+            switch (e.key) {
+                case 'd':	// Fill Down 1 cell
+                case 'D':	// Fill Down 1 cell
+                    if (e.mods == CTRL) {
+                        if (RowIndex + 1 < VisibleRows.length) {
+                            Target = VisibleRows[RowIndex + 1].querySelectorAll(_Selector)[InputIndex];
+                            Target.value = document.activeElement.value;
+                        }
+                    } else if (e.mods == CTRL + SHIFT) {
+                        while (RowIndex + 1 < VisibleRows.length) {
+                            Target = VisibleRows[RowIndex + 1].querySelectorAll(_Selector)[InputIndex];
+                            Target.value = document.activeElement.value;
+                            RowIndex++;
+                        }
+                    }
+                    break;
+                case 'ArrowUp':
+                    if (RowIndex - 1 >= 0)
+                        Target = VisibleRows[RowIndex - 1].querySelectorAll(_Selector)[InputIndex];
+                    break;
+                case 'ArrowDown':
+                    if (RowIndex + 1 < VisibleRows.length)
+                        Target = VisibleRows[RowIndex + 1].querySelectorAll(_Selector)[InputIndex];
+                    break;
+                case 'ArrowLeft':
+                    Target = RowInputs[InputIndex - 1];
+                    break;
+                case 'ArrowRight':
+                    Target = RowInputs[InputIndex + 1];
+                    break;
+                case 'Home':
+                    Target = VisibleRows[0].querySelectorAll(_Selector)[InputIndex];
+                    break;
+                case 'End':
+                    Target = VisibleRows[VisibleRows.length - 1].querySelectorAll(_Selector)[InputIndex];
+                    break;
+            }
+            if (Target) {
+                Target.focus();
+                Target.select();
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return true;
+    }
 }
 
 class CycleFormInputs {
-	constructor() {
-		this.LastInput = undefined;
-	}
+    constructor() {
+        this.LastInput = undefined;
+    }
 
-	/**
-	 * Switches to the next non-form input
-	 *
-	 * @param ae    {DocumentView}   document.activeElement
-	 * @param e     {Event}          Event triggering this call
-	 * @returns     {Boolean}        True if event was acted upon
-	 * @constructor
-	 */
-	Handle(ae, e) {
-		function SwitchTo(el) {
-			el.focus();
-			if(el.select)
-				el.select();
-			HighlightInput(el);
-			return true;
-		}
+    /**
+     * Switches to the next non-form input
+     *
+     * @param ae    {Element}   document.activeElement
+     * @param e     {Event}          Event triggering this call
+     * @returns     {Boolean}        True if event was acted upon
+     * @constructor
+     */
+    Handle(ae, e) {
+        function SwitchTo(el) {
+            el.focus();
+            if (el.select)
+                el.select();
+            HighlightInput(el);
+            return true;
+        }
 
-		/** @param {Array} Forms - All forms on page */
-		let Forms = document.querySelectorAll('FORM'), aForm = Forms[0];
+        /** @param {Array} Forms - All forms on page */
+        let Forms = document.querySelectorAll('FORM'), aForm = Forms[0];
 
-		if(ae) {
-			for(let f of Forms) {
-				if(f.contains(ae)) {
-					aForm = f;
-					break;
-				}
-			}
-		}
-		if(!aForm)
-			return false;
+        if (ae) {
+            for (let f of Forms) {
+                if (f.contains(ae)) {
+                    aForm = f;
+                    break;
+                }
+            }
+        }
+        if (!aForm)
+            return false;
 
-		if(([ 'INPUT', 'SELECT', 'TEXTAREA' ].indexOf(e.target.tagName) != -1)) {
-			let Inputs = Array.from(aForm.querySelectorAll(Selector_FormInputs)),
-				n      = Inputs.indexOf(e.target);
+        if ((['INPUT', 'SELECT', 'TEXTAREA'].indexOf(e.target.tagName) != -1)) {
+            let Inputs = Array.from(aForm.querySelectorAll(Selector_FormInputs)),
+                n = Inputs.indexOf(e.target);
 
-			e.mods & SHIFT
-			? n--
-			: n++;
+            // noinspection JSBitwiseOperatorUsage
+            e.mods & SHIFT
+                ? n--
+                : n++;
 
-			if(n < 0)
-				n = Inputs.length - 1;
-			else if(n == Inputs.length)
-				n = 0;
-			return SwitchTo(Inputs[n]);
-		}
-		return SwitchTo(aForm.querySelector(Selector_FormInputs));
-	}
+            if (n < 0)
+                n = Inputs.length - 1;
+            else if (n == Inputs.length)
+                n = 0;
+            return SwitchTo(Inputs[n]);
+        }
+        return SwitchTo(aForm.querySelector(Selector_FormInputs));
+    }
 }
 
 class CycleNonFormInputs {
-	constructor() {
-		/** @type {HTMLElement} LastInput - The last input that was cycled */
-		this.LastInput = undefined;
-	}
+    constructor() {
+        /** @type {HTMLElement} LastInput - The last input that was cycled */
+        this.LastInput = undefined;
+    }
 
-	/**
-	 * Find:
-	 *    - All inputs that are not contained in a form
-	 *    - Any inputs (in a form) with a type of 'search' or (type of 'text' and name of 'q')
-	 */
-	findInputs() {
-		let nfInputs = [];
-		let Forms    = document.querySelectorAll('FORM');
+    /**
+     * Find:
+     *    - All inputs that are not contained in a form
+     *    - Any inputs (in a form) with a type of 'search' or (type of 'text' and name of 'q')
+     */
+    findInputs() {
+        let nfInputs = [];
+        let Forms = document.querySelectorAll('FORM');
 
-		for(let i of document.querySelectorAll('INPUT[type=text], INPUT[type=search]')) {
-			let InForm = 0;
+        for (let i of document.querySelectorAll('INPUT[type=text], INPUT[type=search]')) {
+            let InForm = 0;
 
-			// Detect hidden via display: none
-			if(i.offsetParent == null)
-				continue;
-			if(i.type == 'search' || i.name == 'q' || i.name == '') {
-				// Excludes form search
-			} else {
-				for(let f of Forms) {
-					if(InForm += f.contains(i) > 0)
-						break;
-				}
-			}
+            // Detect hidden via display: none
+            if (i.offsetParent == null)
+                continue;
+            if (i.type == 'search' || i.name == 'q' || i.name == '') {
+                // Excludes form search
+            } else {
+                for (let f of Forms) {
+                    if (InForm += f.contains(i) > 0)
+                        break;
+                }
+            }
 
-			if(InForm == 0)
-				nfInputs.push(i);
-		}
-		return nfInputs;
-	}
+            if (InForm == 0)
+                nfInputs.push(i);
+        }
+        return nfInputs;
+    }
 
-	/**
-	 * Switches to the next non-form input
-	 *
-	 * @param ae    {DocumentView}    document.activeElement
-	 * @param e     {Event}            Event triggering this call
-	 * @returns     {Boolean}        True if event was acted upon
-	 */
-	Handle(ae, e) {
-		/** @param {Array} nfInputs - Global non-form inputs */
-		let nfInputs = this.findInputs(),
-			x        = undefined;
+    /**
+     * Switches to the next non-form input
+     *
+     * @param ae    {Element}    document.activeElement
+     * @param e     {Event}      Event triggering this call
+     * @returns     {Boolean}    True if event was acted upon
+     *
+     */
+    Handle(ae, e) {
+        /** @param {Array} nfInputs - Global non-form inputs */
+        let nfInputs = this.findInputs(),
+            x = undefined;
 
 //		console.log('CycleNonFormInputs', nfInputs);
-		if(!nfInputs.length)
-			return false;
+        if (!nfInputs.length)
+            return false;
 
-		if(this.LastInput == undefined && (x = nfInputs.indexOf(ae)) != -1)
-			this.LastInput = nfInputs[x];
+        if (this.LastInput == undefined && (x = nfInputs.indexOf(ae)) != -1)
+            this.LastInput = nfInputs[x];
 
-		if(([ 'INPUT', 'SELECT', 'TEXTAREA' ].indexOf(e.target.tagName) == -1 || ae == this.LastInput ||
-		   (e.target.tagName == 'INPUT' && [ 'text', 'search', 'password' ].indexOf(e.target.type) == -1)) ||
-		   (e.target.tagName == 'INPUT' && e.target.selectionStart == 0 && e.target.selectionEnd == e.target.value.length)) {
-//			console.log(this.LastInput);
-			if(this.LastInput != undefined) {
-//				console.log('1');
-				if(ae == this.LastInput) {
-//					console.log('2');
-					if(this.LastInput.selectionEnd - this.LastInput.selectionStart == this.LastInput.value.length) {
-//						console.log('2.1');
-						return this.SwitchTo(nfInputs[nfInputs.indexOf(this.LastInput) + 1] || nfInputs[0]);
-					}
-//					console.log('2.2');
-				} else {
-//					console.log('3');
-					return this.SwitchTo(this.LastInput);
-				}
-			} else {
-//				console.log('4');
-				return this.SwitchTo(nfInputs[0]);
-			}
-		}
-	}
+        if ((['INPUT', 'SELECT', 'TEXTAREA'].indexOf(e.target.tagName) == -1 || ae == this.LastInput ||
+                (e.target.tagName == 'INPUT' && ['text', 'search', 'password'].indexOf(e.target.type) == -1)) ||
+            (e.target.tagName == 'INPUT' && e.target.selectionStart == 0 && e.target.selectionEnd == e.target.value.length)) {
+            if (this.LastInput != undefined) {
+                if (ae == this.LastInput) {
+                    if (this.LastInput.selectionEnd - this.LastInput.selectionStart == this.LastInput.value.length) {
+                        return this.SwitchTo(nfInputs[nfInputs.indexOf(this.LastInput) + 1] || nfInputs[0]);
+                    }
+                } else {
+                    return this.SwitchTo(this.LastInput);
+                }
+            } else {
+                return this.SwitchTo(nfInputs[0]);
+            }
+        }
+    }
 
-	SwitchTo(el) {
+    SwitchTo(el) {
 //		console.log('switching');
-		el.select();
-		this.LastInput = el;
-		HighlightInput(el);
-		return true;
-	}
+        el.select();
+        this.LastInput = el;
+        HighlightInput(el);
+        return true;
+    }
 }
 
 class BackslashHandler {
-	Handle(e) {
-		let ae = document.activeElement;
+    Handle(e) {
+        let ae = document.activeElement;
 
-		if([ 'INPUT', 'TEXTAREA' ].indexOf(ae.tagName) != -1) {
-			if((e.mods == CTRL || e.mods == ALT) && (ae.selectionStart != 0 || ae.selectionEnd != ae.value.length))
-				return ae.select() || true;
-		}
-		if(e.mods & CTRL)
-			return (new CycleFormInputs().Handle(ae, e));
-		else if(e.mods == 0)
-			return (new CycleNonFormInputs().Handle(ae, e));
-	}
+        if (['INPUT', 'TEXTAREA'].indexOf(ae.tagName) != -1) {
+            if ((e.mods == CTRL || e.mods == ALT) && (ae.selectionStart != 0 || ae.selectionEnd != ae.value.length))
+                return ae.select() || true;
+        }
+        // noinspection JSBitwiseOperatorUsage
+        if (e.mods & CTRL)
+            return (new CycleFormInputs().Handle(ae, e));
+        else if (e.mods == 0)
+            return (new CycleNonFormInputs().Handle(ae, e));
+    }
 }
 
 
-let CopyHandlers = (function() {
+let CopyHandlers = (function () {
 
-	/**
-	 * Iterates over immediate children which are #text nodes and joins the textContent properties with a space
-	 * @param {HTMLHtmlElement} elem
-	 * @return string
-	 */
-	function GetChildTextContent(elem) {
-		return Array.from(elem.childNodes)
-			.filter(el => el.nodeType == 3)
-			.map(el => el.textContent)
-			.join(' ');
-	}
+    /**
+     * Iterates over immediate children which are #text nodes and joins the textContent properties with a space
+     * @param {HTMLHtmlElement} elem
+     * @return string
+     */
+    function GetChildTextContent(elem) {
+        return Array.from(elem.childNodes)
+            .filter(el => el.nodeType == 3)
+            .map(el => el.textContent)
+            .join(' ');
+    }
 
-	/**
-	 * Handler for copying parts of a DropDownEdit (JSClass)
-	 *
-	 * @param {Event} e
-	 * @param {HTMLHtmlElement} elem
-	 */
-	function DropDownEditHandler(e, elem) {
-		if(elem.tagName == 'DIV') {
-			CopyToClipboard(GetChildTextContent(elem));
-			return true;
-		}
+    /**
+     * Handler for copying parts of a DropDownEdit (JSClass)
+     *
+     * @param {Event} e
+     * @param {HTMLHtmlElement} elem
+     */
+    function DropDownEditHandler(e, elem) {
+        if (elem.tagName == 'DIV') {
+            CopyToClipboard(GetChildTextContent(elem));
+            return true;
+        }
 
-		if(elem.tagName == 'SPAN') {
-			let itemType = elem.textContent;
-			console.log(itemType);
+        if (elem.tagName == 'SPAN') {
+            let itemType = elem.textContent;
+            console.log(itemType);
 
-			let allItems = Array.from(elem.parentElement.parentElement
-					.querySelectorAll('DIV'),
-				)
-				.filter((elem) =>
-					elem.children[1].textContent == itemType,
-				);
+            let allItems = Array.from(elem.parentElement.parentElement
+                .querySelectorAll('DIV'),
+            )
+                .filter((elem) =>
+                    elem.children[1].textContent == itemType,
+                );
 
-			return CopyToClipboard(
-				allItems
-					.map(GetChildTextContent)
-					.join('|'),
-			)
-		}
-		console.log('DropDownEditHandler - Dont know what to do with %o', elem);
-	}
+            return CopyToClipboard(
+                allItems
+                    .map(GetChildTextContent)
+                    .join('|'),
+            )
+        }
+        console.log('DropDownEditHandler - Dont know what to do with %o', elem);
+    }
 
-	/**
-	 * Handler for copying a DropDownEdit (JSClass) list in its entirety
-	 *
-	 * @param {Event} e
-	 * @param {HTMLHtmlElement} elem
-	 */
-	function DropDownEditCopyHandler(e, elem) {
-		console.log('DropDownEditCopyHandler not yet implemented');
-		return true;
-	}
+    /**
+     * Handler for copying a DropDownEdit (JSClass) list in its entirety
+     *
+     * @param {Event} e
+     * @param {HTMLHtmlElement} elem
+     */
+    function DropDownEditCopyHandler(e, elem) {
+        console.log('DropDownEditCopyHandler not yet implemented');
+        return true;
+    }
 
-	function CopyPageLink(e) {
-		// let clip = '<a href="' + elem.href + '">' + elem.textContent + '</a>';
-		let clip = `[${ document.title }](${ document.location.href })`;
-		CopyToClipboard(clip);
-		//ShowPanel('Copied to clipboard:', elem);
-		return false;
-	}
+    function CopyPageLink(e) {
+        // let clip = '<a href="' + elem.href + '">' + elem.textContent + '</a>';
+        let clip = `[${document.title}](${document.location.href})`;
+        CopyToClipboard(clip);
+        //ShowPanel('Copied to clipboard:', elem);
+        return true;
+    }
 
-	function CopyAnchor(e, elem) {
-		// let clip = '<a href="' + elem.href + '">' + elem.textContent + '</a>';
-		let clip = `[${ elem.textContent }](${ elem.href })`;
-		CopyToClipboard(clip);
-		animate(elem, 'CopyThat_A_Copied');
-		ShowPanel('Copied to clipboard:', elem);
-		return false;
-	}
+    function CopyAnchor(e, elem) {
+        // let clip = '<a href="' + elem.href + '">' + elem.textContent + '</a>';
+        let clip = `[${elem.textContent}](${elem.href})`;
+        CopyToClipboard(clip);
+        animate(elem, 'CopyThat_A_Copied');
+        ShowPanel('Copied to clipboard:', elem);
+        return true;
+    }
 
-	function CopySelect(e, elem) {
-		elem = elem.closest('SELECT');
+    function CopySelect(e, elem) {
+        elem = elem.closest('SELECT');
 
-		if(elem.multiple != true) {
-			if(elem.selectedOptions.length) {
-				CopyToClipboard(elem.selectedOptions[0].text.trim());
-				animate(elem, 'CopyThat_A_Copied');
-			}
-			return true;
-		} else {
-			let tValues = [];
-			for(let opt of elem.options) {
-				if(opt.selected)
-					tValues.push(opt.textContent.trim());
-			}
+        if (elem.multiple != true) {
+            if (elem.selectedOptions.length) {
+                CopyToClipboard(elem.selectedOptions[0].text.trim());
+                animate(elem, 'CopyThat_A_Copied');
+            }
+            return true;
+        } else {
+            let tValues = [];
+            for (let opt of elem.options) {
+                if (opt.selected)
+                    tValues.push(opt.textContent.trim());
+            }
 
-			CopyToClipboard(tValues.join('\r\n'));
-			animate(elem, 'CopyThat_A_Copied');
-			return true;
-		}
-	}
+            CopyToClipboard(tValues.join('\r\n'));
+            animate(elem, 'CopyThat_A_Copied');
+            return true;
+        }
+    }
 
-	function CopyTextContent(e, elem) {
-		let content = elem.textContent.trim();
-		if(content != '') {
-			CopyToClipboard(elem.textContent);
-		} else {
-			CopyPageLink(e);
-		}
-		animate(elem, 'CopyThat_A_Copied');
-		return true;
-	}
+    function CopyTextContent(e, elem) {
+        let content = elem.textContent.trim();
+        if (content != '') {
+            CopyToClipboard(content);
+        } else {
+            CopyPageLink(e);
+        }
+        animate(elem, 'CopyThat_A_Copied');
+        return true;
+    }
 
-	function CopyValue(e, elem) {
-		CopyToClipboard(elem.value);
-		animate(elem, 'CopyThat_A_Copied');
-		return true;
-	}
+    function CopyValue(e, elem) {
+        CopyToClipboard(elem.value);
+        animate(elem, 'CopyThat_A_Copied');
+        return true;
+    }
 
-	function CopyToClipboard(msg) {
-		console.log('Copied To Clipboard: "%s"', msg);
-		GM_setClipboard(msg);
-		return true;
-	}
+    function CopyToClipboard(msg) {
+        console.log('Copied To Clipboard: "%s"', msg);
+        GM_setClipboard(msg);
+        return true;
+    }
 
-	return {
-		'Down':         {
-			'DIV[jsclass="DropDownEditSelections"] > DIV > SPAN': DropDownEditHandler,
-			'DIV[jsclass="DropDownEditSelections"] > DIV':        DropDownEditHandler,
-			'DIV[jsclass="DropDownEditSelections"]':              DropDownEditCopyHandler,
-		},
-		'Up':           {
-			'A':        CopyAnchor,
-			'SELECT':   CopySelect,
-			'OPTION':   CopySelect,
-			'OPTGROUP': CopySelect,
-			'TD':       CopyTextContent,
-			'TR':       CopyTextContent,
-			'TH':       CopyTextContent,
-			'DIV':      CopyTextContent,
-			'P':        CopyTextContent,
-			'SPAN':     CopyTextContent,
-			'INPUT':    CopyValue,
-			'LABEL':    CopyTextContent,
-			'PRE':      CopyTextContent,
-			'TEXTAREA': CopyValue,
-			'BODY':     CopyPageLink,
-		},
-		'CopyPageLink': CopyPageLink,
-	}
+    return {
+        'Down': {
+            'DIV[jsclass="DropDownEditSelections"] > DIV > SPAN': DropDownEditHandler,
+            'DIV[jsclass="DropDownEditSelections"] > DIV': DropDownEditHandler,
+            'DIV[jsclass="DropDownEditSelections"]': DropDownEditCopyHandler,
+            'PRE.sf-dump': CopyTextContent, // dump() output from laravel
+        },
+        'Up': {
+            'A': CopyAnchor,
+            'SELECT': CopySelect,
+            'OPTION': CopySelect,
+            'OPTGROUP': CopySelect,
+            'TD': CopyTextContent,
+            'TR': CopyTextContent,
+            'TH': CopyTextContent,
+            'DIV': CopyTextContent,
+            'P': CopyTextContent,
+            'PRE': CopyTextContent,
+            'SPAN': CopyTextContent,
+            'INPUT': CopyValue,
+            'LABEL': CopyTextContent,
+            'TEXTAREA': CopyValue,
+            'BODY': CopyPageLink,
+        },
+        'CopyPageLink': CopyPageLink,
+    }
 }());
 
 class CopyHandler {
-	Handle(e) {
-		if(isInputField(document.activeElement) || hasDocumentSelection())
-			return false;
-		let tHoverPath = Array.from(document.querySelectorAll(':hover'));
+    Handle(e) {
+        if (isInputField(document.activeElement) || hasDocumentSelection())
+            return false;
+        let tHoverPath = Array.from(document.querySelectorAll(':hover'));
 
-		if(this.SelectorMatchHandler(tHoverPath, CopyHandlers.Down, e))
-			return true;
+        if (this.SelectorMatchHandler(tHoverPath, CopyHandlers.Down, e))
+            return true;
 
-		if(this.ElementMatchHandler(tHoverPath.reverse(), CopyHandlers.Up, e))
-			return true;
+        if (this.ElementMatchHandler(tHoverPath.reverse(), CopyHandlers.Up, e))
+            return true;
 
-		if(tHoverPath.length === 0) {
-			CopyHandlers.CopyPageLink(e);
-			return true;
-		}
-	}
+        if (tHoverPath.length === 0) {
+            CopyHandlers.CopyPageLink(e);
+            return true;
+        }
+    }
 
-	/**
-	 * Checks each element in ElementPath for a selector match against {SelectorFns} in priority
-	 * 	of selector order
-	 *
-	 * @param {HTMLHtmlElement[]} ElementPath	The path of elements to search for matches
-	 * @param {object} SelectorFns				The map of CSS Selector : HandlerFn to check against
-	 * @param {Event} e							The originating event to be handled
-	 * @constructor
-	 */
-	SelectorMatchHandler(ElementPath, SelectorFns, e) {
-		for(let selector of Object.keys(SelectorFns)) {
-			for(let elem of ElementPath) {
-				if(elem.matches(selector)) {
-					if(SelectorFns[selector](e, elem))
-						return true;
-				}
-			}
-		}
-		return false;
-	}
+    /**
+     * Checks each element in ElementPath for a selector match against {SelectorFns} in priority
+     *    of selector order
+     *
+     * @param {HTMLHtmlElement[]} ElementPath    The path of elements to search for matches
+     * @param {object} SelectorFns                The map of CSS Selector : HandlerFn to check against
+     * @param {Event} e                            The originating event to be handled
+     * @constructor
+     */
+    SelectorMatchHandler(ElementPath, SelectorFns, e) {
+        for (let selector of Object.keys(SelectorFns)) {
+            for (let elem of ElementPath) {
+                if (elem.matches(selector)) {
+                    if (SelectorFns[selector](e, elem))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Checks each element in ElementPath for a selector match against {SelectorFns} in priority of
-	 * 	element order
-	 *
-	 * @param {HTMLHtmlElement[]} ElementPath	The path of elements to search for matches
-	 * @param {object} SelectorFns				The map of CSS Selector : HandlerFn to check against
-	 * @param {Event} e							The originating event to be handled
-	 * @constructor
-	 */
-	ElementMatchHandler(ElementPath, SelectorFns, e) {
-		for(let elem of ElementPath) {
-			for(let selector of Object.keys(SelectorFns)) {
-				if(elem.matches(selector)) {
-					if(SelectorFns[selector](e, elem))
-						return true;
-				}
-			}
-		}
-		return false;
-	}
+    /**
+     * Checks each element in ElementPath for a selector match against {SelectorFns} in priority of
+     *    element order
+     *
+     * @param {HTMLHtmlElement[]} ElementPath    The path of elements to search for matches
+     * @param {object} SelectorFns                The map of CSS Selector : HandlerFn to check against
+     * @param {Event} e                            The originating event to be handled
+     * @constructor
+     */
+    ElementMatchHandler(ElementPath, SelectorFns, e) {
+        for (let elem of ElementPath) {
+            for (let selector of Object.keys(SelectorFns)) {
+                if (elem.matches(selector)) {
+                    if (SelectorFns[selector](e, elem))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }
 
-let PasteHandlers = (function() {
+let PasteHandlers = (function () {
 
-	function PasteSelect(e, elem) {
-		let clipText = e.clipboardData.getData('text/plain');
+    function PasteSelect(e, elem) {
+        let clipText = e.clipboardData.getData('text/plain');
 
-		if(!clipText)
-			return false;
+        if (!clipText)
+            return false;
 
-		elem = elem.closest('SELECT');
+        elem = elem.closest('SELECT');
 
-		if(elem.multiple != true) {
-			clipText = clipText.trim();
-			for(let opt of elem.options) {
-				if(opt.text.trim() == clipText) {
-					elem.value = opt.value;
-					break;
-				}
-			}
+        if (elem.multiple != true) {
+            clipText = clipText.trim();
+            for (let opt of elem.options) {
+                if (opt.text.trim() == clipText) {
+                    elem.value = opt.value;
+                    break;
+                }
+            }
 
-			animate(elem, 'CopyThat_Pasted');
-			return true;
-		} else {
-			let tValues = clipText
-				.split(/[\r\n]+/)
-				.map(String.trim);
-			for(let opt of elem.options) {
-				opt.selected = (tValues.indexOf(opt.textContent.trim()) != -1);
-			}
+            animate(elem, 'CopyThat_Pasted');
+            return true;
+        } else {
+            let tValues = clipText
+                .split(/[\r\n]+/)
+                .map(String.trim);
+            for (let opt of elem.options) {
+                opt.selected = (tValues.indexOf(opt.textContent.trim()) != -1);
+            }
 
-			animate(elem, 'CopyThat_Pasted');
-			return true;
-		}
-	}
+            animate(elem, 'CopyThat_Pasted');
+            return true;
+        }
+    }
 
-	function PasteValue(e, elem) {
-		let clipText = e.clipboardData.getData('text/plain');
+    function PasteValue(e, elem) {
+        let clipText = e.clipboardData.getData('text/plain');
 
-		if(!clipText)
-			return false;
+        if (!clipText)
+            return false;
 
-		elem.value = clipText;
-		animate(elem, 'CopyThat_Pasted');
-		return true;
-	}
+        elem.value = clipText;
+        animate(elem, 'CopyThat_Pasted');
+        return true;
+    }
 
-	return {
-		'SELECT':   PasteSelect,
-		'OPTGROUP': PasteSelect,
-		'OPTION':   PasteSelect,
-		'INPUT':    PasteValue,
-		'TEXTAREA': PasteValue,
-	};
+    return {
+        'SELECT': PasteSelect,
+        'OPTGROUP': PasteSelect,
+        'OPTION': PasteSelect,
+        'INPUT': PasteValue,
+        'TEXTAREA': PasteValue,
+    };
 }());
 
-document.addEventListener('paste', function(e) {
-	if(!isInputField(document.activeElement) && !hasDocumentSelection()) {
-		let tHoverPath = Array.from(document.querySelectorAll(':hover'))
-			.reverse();
+document.addEventListener('paste', function (e) {
+    if (!isInputField(document.activeElement) && !hasDocumentSelection()) {
+        let tHoverPath = Array.from(document.querySelectorAll(':hover'))
+            .reverse();
 
-		if(tHoverPath.length === 0 || !PasteHandlers[tHoverPath[0].tagName])
-			return;
+        if (tHoverPath.length === 0 || !PasteHandlers[tHoverPath[0].tagName])
+            return;
 
-		if(PasteHandlers[tHoverPath[0].tagName](e, ...tHoverPath)) {
-			e.stopPropagation();
-			e.preventDefault();
-		}
-	}
+        if (PasteHandlers[tHoverPath[0].tagName](e, ...tHoverPath)) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+    }
 }, true);
 
-document.addEventListener('copy', function(e) {
+document.addEventListener('copy', function (e) {
 //	console.log('copy - ', e);
 }, true);
 
@@ -741,58 +735,58 @@ document.addEventListener('copy', function(e) {
 let styleInserted = false;
 
 let panel = {
-	inserted: false,
+    inserted: false,
 };
 
 /** Adds the styles to the document if they have not already been added **/
 function addStyles() {
-	if(!styleInserted) {
-		styleInserted = true;
-		GM_addStyle(GM_getResourceText('CopyThat_Style'));
-	}
+    if (!styleInserted) {
+        styleInserted = true;
+        GM_addStyle(GM_getResourceText('CopyThat_Style'));
+    }
 }
 
 /** Adds the panel to the document if it has not already been added, sets it's content to content **/
 function ShowPanel(header, content) {
-	if(!panel.inserted) {
-		addStyles();
-		panel.inserted      = true;
-		let Container       = document.createElement('div');
-		Container.innerHTML = GM_getResourceText('CopyThat_Panel');
+    if (!panel.inserted) {
+        addStyles();
+        panel.inserted = true;
+        let Container = document.createElement('div');
+        Container.innerHTML = GM_getResourceText('CopyThat_Panel');
 
-		document.body.appendChild(Container.firstElementChild);
-		panel.Elem    = document.querySelector('div.CopyThat_Panel > div');
-		panel.Header  = document.querySelector('div.CopyThat_Panel h5');
-		panel.Content = document.querySelector('div.CopyThat_Panel div > div:nth-of-type(1)');
+        document.body.appendChild(Container.firstElementChild);
+        panel.Elem = document.querySelector('div.CopyThat_Panel > div');
+        panel.Header = document.querySelector('div.CopyThat_Panel h5');
+        panel.Content = document.querySelector('div.CopyThat_Panel div > div:nth-of-type(1)');
 //		panel.Progress = Container.querySelector('div#CopyThat_Panel div > div:nth-of-type(2) > div');
-		setTimeout(() => ShowPanel(header, content), 50);	// Defer until re-flow
-		return;
-	}
+        setTimeout(() => ShowPanel(header, content), 50);	// Defer until re-flow
+        return;
+    }
 
 //	console.log(panel);
 
-	panel.Header.innerHTML  = header && (typeof header != 'string')
-							  ? header.outerHTML
-							  : header || '';
-	panel.Content.innerHTML = content && (typeof content != 'string')
-							  ? content.outerHTML
-							  : content || '';
-	panel.Elem.classList.add('open');
+    panel.Header.innerHTML = header && (typeof header != 'string')
+        ? header.outerHTML
+        : header || '';
+    panel.Content.innerHTML = content && (typeof content != 'string')
+        ? content.outerHTML
+        : content || '';
+    panel.Elem.classList.add('open');
 
 //	panel.Progress.classList.add('go');
-	if(panel.CloseTimer)
-		clearTimeout(panel.CloseTimer);
-	panel.CloseTimer = setTimeout(() => {
-		panel.Elem.classList.remove('open');
+    if (panel.CloseTimer)
+        clearTimeout(panel.CloseTimer);
+    panel.CloseTimer = setTimeout(() => {
+        panel.Elem.classList.remove('open');
 //		panel.Progress.classList.remove('go');
-		panel.CloseTimer = undefined;
-	}, 5000);
+        panel.CloseTimer = undefined;
+    }, 5000);
 }
 
 /** Returns true if the document has a selection **/
 function hasDocumentSelection() {
-	return document.getSelection()
-			   .toString().length > 0;
+    return document.getSelection()
+        .toString().length > 0;
 }
 
 /**
@@ -801,13 +795,13 @@ function hasDocumentSelection() {
  * @param {String}    className    The className to start the animation
  */
 function animate(el, className) {
-	addStyles();
-	let animEnd = () => {
-		el.removeEventListener('animationend', animEnd);
-		el.classList.remove(className);
-	};
-	el.addEventListener('animationend', animEnd);
-	el.classList.add(className);
+    addStyles();
+    let animEnd = () => {
+        el.removeEventListener('animationend', animEnd);
+        el.classList.remove(className);
+    };
+    el.addEventListener('animationend', animEnd);
+    el.classList.add(className);
 }
 
 
@@ -881,33 +875,33 @@ function animate(el, className) {
  */
 
 const KeyCommands = [
-	{ Class: TableOperations, mods: CTRL, Keys: [ 'd' ] },
-	{ Class: TableOperations, mods: ALT, Keys: [ 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End' ] },
-	{ Class: TableOperations, mods: CTRL + SHIFT, Keys: [ 'D' ] },
-	{ Class: BackslashHandler, Keys: [ '\\' ] },
-	{ Class: BackslashHandler, mods: CTRL, Keys: [ '\\' ] },
-	{ Class: CopyHandler, mods: CTRL, Keys: [ 'c' ] },
+    {Class: TableOperations, mods: CTRL, Keys: ['d']},
+    {Class: TableOperations, mods: ALT, Keys: ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End']},
+    {Class: TableOperations, mods: CTRL + SHIFT, Keys: ['D']},
+    {Class: BackslashHandler, Keys: ['\\']},
+    {Class: BackslashHandler, mods: CTRL, Keys: ['\\']},
+    {Class: CopyHandler, mods: CTRL, Keys: ['c']},
 ];
 
 new (class KeyCommandRouter {
-	constructor() {
-		window.document.addEventListener('keydown', this.onKeyDown.bind(this), true);
-	}
+    constructor() {
+        window.document.addEventListener('keydown', this.onKeyDown.bind(this), true);
+    }
 
-	onKeyDown(e) {
-		e.mods = (e.ctrlKey) + (e.altKey << 1) + (e.shiftKey << 2);
-		for(let cmd of KeyCommands) {
-			if((cmd.mods || 0) == e.mods && cmd.Keys.indexOf(e.key) != -1) {
-				if(!cmd.obj)
-					cmd.obj = new cmd.Class();
-				if(cmd.obj.Handle(e)) {
-					e.stopPropagation();
-					e.preventDefault();
-					return;
-				}
-			}
-		}
-	}
+    onKeyDown(e) {
+        e.mods = (e.ctrlKey) + (e.altKey << 1) + (e.shiftKey << 2);
+        for (let cmd of KeyCommands) {
+            if ((cmd.mods || 0) == e.mods && cmd.Keys.indexOf(e.key) != -1) {
+                if (!cmd.obj)
+                    cmd.obj = new cmd.Class();
+                if (cmd.obj.Handle(e)) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                }
+            }
+        }
+    }
 });
 
 /*
@@ -915,16 +909,16 @@ new (class KeyCommandRouter {
  |		Shows the elements that are selected along with the count
  */
 
-for(let elem of document.querySelectorAll('SELECT[multiple]')) {
-	elem.addEventListener('mouseenter', function(e) {
-		let tSelected  = Array.prototype.map.call(Array.from(e.target.selectedOptions), (opt) => opt.textContent.trim());
-		e.target.title = `Selected: ${ e.target.selectedOptions.length } \n${ tSelected.join('\r\n') }`;
-	});
+for (let elem of document.querySelectorAll('SELECT[multiple]')) {
+    elem.addEventListener('mouseenter', function (e) {
+        let tSelected = Array.prototype.map.call(Array.from(e.target.selectedOptions), (opt) => opt.textContent.trim());
+        e.target.title = `Selected: ${e.target.selectedOptions.length} \n${tSelected.join('\r\n')}`;
+    });
 }
 
 
 /*
  | Remove autocomplete=off from FORM elements
  */
-for(let elem of document.querySelectorAll('FORM[autocomplete="off"]'))
-	elem.removeAttribute('autocomplete');
+for (let elem of document.querySelectorAll('FORM[autocomplete="off"]'))
+    elem.removeAttribute('autocomplete');
